@@ -1,29 +1,29 @@
 // /**
 //  * @file main.cpp
-//  * @brief Temperatur-logger med WiFiManager, SPIFFS og WebServer.
+//  * @brief Temperatur-logger med WiFi, SPIFFS og WebServer.
 //  *
 //  * Logger temperaturer fra en DS18B20-sensor og gemmer dem i en CSV-fil på SPIFFS.
 //  * Webserver giver adgang til CSV-data og aktuelle temperaturmålinger.
-//  * WiFiManager bruges til konfiguration af netværk via portal.
 //  */
 
-//  #include <OneWire.h>
-//  #include <DallasTemperature.h>
-//  #include <WiFiManager.h>        ///< AutoConnect WiFi Manager
-//  #include <SPIFFS.h>
-//  #include <WebServer.h>
+//  #include <OneWire.h> ///en seriel kommunikationsprotokol
+//  #include <DallasTemperature.h> ///bygget ovenpå OneWire og giver en nem måde at håndtere DS18B20-temperatursensorer
+//  #include <WiFi.h> ///bruges til at forbinde ESP32 til et WiFi-netværk
+//  #include "secrets.h"  ///< Indeholder: const char* ssid og password
+//  #include <SPIFFS.h> ///et lille filsystem, der ligger i flash-hukommelsen på mikrocontrolleren
+//  #include <WebServer.h> ///Starter en simpel HTTP-server på ESP32.
  
-//  #define ONE_WIRE_BUS 4
-//  #define RESET_BUTTON_PIN 14
+//  #define ONE_WIRE_BUS 4             ///< GPIO-pin til DS18B20 data
+//  #define RESET_BUTTON_PIN 14        ///< GPIO-pin til reset-knap
  
 //  OneWire oneWire(ONE_WIRE_BUS);
-//  DallasTemperature sensors(&oneWire);
+//  DallasTemperature sensors(&oneWire); ///&oneWire er adresseoperatoren
 //  WebServer server(80);
  
-//  const char *filename = "/output.csv";
+//  const char *filename = "/output.csv";  ///< Filnavn for temperatur-log
  
 //  unsigned long previousMillis = 0;
-//  unsigned long interval = 30000;
+//  unsigned long interval = 30000;  ///< Tidsinterval for WiFi-genforbindelse
  
 //  unsigned long buttonPressStart = 0;
 //  bool resetInitiated = false;
@@ -49,18 +49,18 @@
 //  }
  
 //  /**
-//   * @brief Initialiserer WiFi med WiFiManager. Starter konfigurationsportal, hvis ikke tidligere tilsluttet.
+//   * @brief Initialiserer WiFi-forbindelse og skriver IP til Serial.
 //   */
 //  void initWiFi() {
-//    WiFiManager wm;
-//    bool res = wm.autoConnect("ESP32-Logger", "admin123");
-//    if (!res) {
-//      Serial.println("WiFi forbindelse mislykkedes - genstarter");
-//      delay(3000);
-//      ESP.restart();
+//    WiFi.mode(WIFI_STA);
+//    WiFi.begin(ssid, password);
+//    Serial.print("Connecting to WiFi");
+//    while (WiFi.status() != WL_CONNECTED) {
+//      delay(1000);
+//      Serial.print(".");
 //    }
-//    Serial.println("WiFi tilsluttet!");
-//    Serial.print("IP adresse: ");
+//    Serial.println("\nConnected to WiFi!");
+//    Serial.print("IP address: ");
 //    Serial.println(WiFi.localIP());
 //  }
  
@@ -68,7 +68,7 @@
 //   * @brief Tilføjer ny temperaturmåling til CSV-fil.
 //   * @param filename Sti til filen
 //   * @param time Tidsstempel som tekst
-//   * @param temperature Målt temperatur
+//   * @param temperature Målt temperatur i grader Celsius
 //   */
 //  void appendToCSV(const char* filename, const char* time, float temperature) {
 //    bool fileExists = SPIFFS.exists(filename);
@@ -82,7 +82,6 @@
 //        return;
 //      }
 //    }
- 
 //    if (!fileExists) {
 //      file.println("Time,Temperature");
 //    }
@@ -93,38 +92,25 @@
 //    file.close();
 //  }
  
-// /**
-//  * @brief Tjekker om reset-knappen holdes nede i 10 sekunder og nulstiller konfigurationen.
-//  */
-// void checkResetButton() {
-//   if (digitalRead(RESET_BUTTON_PIN) == LOW) {
-//     if (!resetInitiated) {
-//       buttonPressStart = millis();
-//       resetInitiated = true;
-//     } else if (millis() - buttonPressStart >= 10000) {
-//       Serial.println("Reset udført efter 10 sek. knaptryk!");
-
-//       // Slet CSV-fil
-//       if (SPIFFS.exists(filename)) {
-//         SPIFFS.remove(filename);
-//         Serial.println("CSV-fil slettet.");
-//       }
-
-//       // Glem WiFi-indstillinger
-//       WiFiManager wm;
-//       wm.resetSettings();
-
-//       delay(1000); // kort ventetid inden genstart
-//       ESP.restart();
-//     }
-//   } else {
-//     resetInitiated = false;
-//   }
-// }
-
+//  /**
+//   * @brief Tjekker om reset-knappen holdes nede i 10 sekunder og genstarter derefter ESP32.
+//   */
+//  void checkResetButton() {
+//    if (digitalRead(RESET_BUTTON_PIN) == LOW) {
+//      if (!resetInitiated) {
+//        buttonPressStart = millis();
+//        resetInitiated = true;
+//      } else if (millis() - buttonPressStart >= 10000) {
+//        Serial.println("Reset udført efter 10 sek. knaptryk!");
+//        ESP.restart();
+//      }
+//    } else {
+//      resetInitiated = false;
+//    }
+//  }
  
 //  /**
-//   * @brief Læser temperatur og tidspunkt og logger til serial og CSV.
+//   * @brief Læser temperatur og tidspunkt og skriver til Serial og CSV.
 //   */
 //  void printLog() {
 //    struct tm timeinfo;
@@ -140,11 +126,12 @@
 //    strftime(logTime, sizeof(logTime), "%Y-%m-%d %H:%M:%S", &timeinfo);
  
 //    Serial.println(String(logTime) + " - Temperatur: " + String(tempC, 2) + " ºC");
+ 
 //    appendToCSV(filename, logTime, tempC);
 //  }
  
 //  /**
-//   * @brief Setup-funktion.
+//   * @brief Setup-funktion. Initialiserer systemet, SPIFFS, WiFi, tid, temperatur og webserver.
 //   */
 //  void setup() {
 //    Serial.begin(115200);
@@ -212,13 +199,14 @@
 //        server.send(500, "text/plain", "CSV-fil ikke fundet");
 //        return;
 //      }
+ 
 //      server.streamFile(file, "text/csv");
 //      file.close();
 //    });
  
 //    server.on("/delete", HTTP_GET, []() {
-//      if (SPIFFS.exists(filename)) {
-//        SPIFFS.remove(filename);
+//      if (SPIFFS.exists("/output.csv")) {
+//        SPIFFS.remove("/output.csv");
 //        server.send(200, "text/plain", "CSV-fil slettet.");
 //      } else {
 //        server.send(404, "text/plain", "CSV-fil findes ikke.");
@@ -242,6 +230,6 @@
 //    }
  
 //    server.handleClient();
-//    delay(5000);  // 5 sekunder mellem logninger
+//    delay(5000);  // Vent 5 sekunder mellem målinger
 //  }
  
