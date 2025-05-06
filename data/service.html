@@ -4,8 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TemperaturLogger</title>
-  
+  <title>Responsive NavBar</title>
+
   <link rel="stylesheet" href="css/navbar.css">
 </head>
 
@@ -13,13 +13,13 @@
   <div class="nav">
     <!-- checkbox to set when window is smaller than 600px -->
     <input type="checkbox" id="nav-check">
-    
+
     <div class="nav-header">
       <div class="nav-title">
         TemperaturLogger
       </div>
     </div>
-    
+
     <!-- Show the hamburgermenu -->
     <div class="nav-btn">
       <label for="nav-check">
@@ -28,33 +28,17 @@
         <span></span>
       </label>
     </div>
-    
+
     <div class="nav-links">
-      
+
       <a href="service.html" target="_top">Service</a>
       <a href="diagram.html" target="_top">Temperatur-diagram</a>
       <a href="wificonf.html" target="_top">WiFi-konfiguration</a>
-      
+
     </div>
   </div>
-  <h1 style="margin-left: 30px;">Temperaturmåling</h1>
-  <p id="output">Henter data...</p>
-
-  <script>
-    function fetchTemperature() {
-      fetch('/temperature')
-        .then(response => response.json())
-        .then(data => {
-          document.getElementById('output').innerText =
-            `${data.date} - Temperatur: ${data.temperature.toFixed(2)} ºC`;
-        })
-        .catch(err => {
-          document.getElementById('output').innerText = "Fejl ved hentning af data";
-        });
-    }
-
-    fetchTemperature();         // Hent med det samme
-    setInterval(fetchTemperature, 5000);  // Hent hvert 5. sekund
-  </script>
+  <button id="button1"><a href="#">Hent csv-fil</a></button>
+  <button id="button2"><a href="#">Slet csv-fil</a></button>
+  <button id="button2"><a href="#">Nulstil Wifi</a></button>
+  
 </body>
-</html>
