@@ -1,0 +1,98 @@
+#include <OneWire.h>
+#include <DallasTemperature.h>
+#include <WiFi.h>
+#include "secrets.h" // husk at have ssid og password her
+
+
+#define ONE_WIRE_BUS 4      // DS18B20 DATA pin
+#define RESET_BUTTON_PIN 14 // Tilslut din knap til GPIO14 (med GND)
+
+OneWire oneWire(ONE_WIRE_BUS);
+DallasTemperature sensors(&oneWire);
+
+// WiFi og tid
+unsigned long previousMillis = 0;
+unsigned long interval = 30000;
+
+// Reset-knap timer
+unsigned long buttonPressStart = 0;
+bool resetInitiated = false;
+
+void setTimezone(String timezone) {
+  setenv("TZ", timezone.c_str(), 1);
+  tzset();
+}
+
+void initTime(String timezone) {
+  configTime(0, 0, "pool.ntp.org");
+  struct tm timeinfo;
+  if (!getLocalTime(&timeinfo)) {
+    Serial.println("Failed to get time");
+    return;
+  }
+  setTimezone(timezone);
+}
+
+void initWiFi() {
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(1000);
+    Serial.print(".");
+  }
+  Serial.println(WiFi.localIP());
+}
+
+void printLog() {
+  struct tm timeinfo;
+  if (!getLocalTime(&timeinfo)) {
+    Serial.println("Failed to get time");
+    return;
+  }
+
+  sensors.requestTemperatures();
+  float tempC = sensors.getTempCByIndex(0);
+
+  char timeString[64];
+  strftime(timeString, sizeof(timeString), "%Y-%m-%d %H:%M:%S", &timeinfo);
+  Serial.printf("%s - Temperatur: %.2f ºC\n", timeString, tempC);
+}
+
+void checkResetButton() {
+  if (digitalRead(RESET_BUTTON_PIN) == LOW) {
+    if (!resetInitiated) {
+      buttonPressStart = millis();
+      resetInitiated = true;
+    } else if (millis() - buttonPressStart >= 1000) {
+      Serial.println("Reset udført efter 10 sek. knaptryk!");
+      ESP.restart(); // Udfør software-reset
+    }
+  } else {
+    resetInitiated = false;
+  }
+}
+
+void setup() {
+  Serial.begin(115200);
+  pinMode(RESET_BUTTON_PIN, INPUT_PULLUP); // Brug evt. ekstern modstand hvis ustabil
+
+  sensors.begin();
+  initWiFi();
+  initTime("CET-1CEST,M3.5.0,M10.5.0/3");
+
+  Serial.println("Startet temperatur-logger...");
+}
+
+void loop() {
+  printLog();
+  checkResetButton();
+
+  // WiFi re-connect hvis nødvendigt
+  if ((WiFi.status() != WL_CONNECTED) && (millis() - previousMillis >= interval)) {
+    WiFi.disconnect();
+    WiFi.reconnect();
+    previousMillis = millis();
+  }
+
+  delay(5000); // hver 5. sekund
+}

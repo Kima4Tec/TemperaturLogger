@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Temperaturmåling</title>
+  <meta charset="UTF-8">
+</head>
+<body>
+  <h1>Temperaturmåling</h1>
+  <p id="output">Henter data...</p>
+
+  <script>
+    function fetchTemperature() {
+      fetch('/temperature')
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById('output').innerText =
+            `${data.date} - Temperatur: ${data.temperature.toFixed(2)} ºC`;
+        })
+        .catch(err => {
+          document.getElementById('output').innerText = "Fejl ved hentning af data";
+        });
+    }
+
+    fetchTemperature();         // Hent med det samme
+    setInterval(fetchTemperature, 5000);  // Hent hvert 5. sekund
+  </script>
+</body>
+</html>
