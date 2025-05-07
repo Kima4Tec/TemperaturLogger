@@ -177,21 +177,21 @@ void setup() {
   strftime(timeString, sizeof(timeString), "%Y-%m-%d %H:%M:%S", &timeinfo);
   appendToCSV(filename, timeString, tempC);
 
-  // Webserver routes
-  server.on("/", HTTP_GET, []() {
+  // Webserver routes (Async-style)
+  server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {
     File file = SPIFFS.open("/index.html", "r");
     if (!file) {
-      server.send(500, "text/plain", "index.html ikke fundet");
+      request->send(500, "text/plain", "index.html ikke fundet");
       return;
     }
-    server.streamFile(file, "text/html");
+    request->send(file, "text/html");
     file.close();
   });
 
-  server.on("/temperature", HTTP_GET, []() {
+  server.on("/temperature", HTTP_GET, [](AsyncWebServerRequest *request) {
     struct tm now;
     if (!getLocalTime(&now)) {
-      server.send(500, "text/plain", "Failed to get time");
+      request->send(500, "text/plain", "Failed to get time");
       return;
     }
 
@@ -201,25 +201,25 @@ void setup() {
     strftime(nowString, sizeof(nowString), "%Y-%m-%d %H:%M:%S", &now);
 
     String response = "{\"date\": \"" + String(nowString) + "\", \"temperature\": " + String(currentTemp) + "}";
-    server.send(200, "application/json", response);
+    request->send(200, "application/json", response);
   });
 
-  server.on(filename, HTTP_GET, []() {
+  server.on(filename, HTTP_GET, [](AsyncWebServerRequest *request) {
     File file = SPIFFS.open(filename, "r");
     if (!file) {
-      server.send(500, "text/plain", "CSV-fil ikke fundet");
+      request->send(500, "text/plain", "CSV-fil ikke fundet");
       return;
     }
-    server.streamFile(file, "text/csv");
+    request->send(file, "text/csv");
     file.close();
   });
 
-  server.on("/delete", HTTP_GET, []() {
+  server.on("/delete", HTTP_GET, [](AsyncWebServerRequest *request) {
     if (SPIFFS.exists(filename)) {
       SPIFFS.remove(filename);
-      server.send(200, "text/plain", "CSV-fil slettet.");
+      request->send(200, "text/plain", "CSV-fil slettet.");
     } else {
-      server.send(404, "text/plain", "CSV-fil findes ikke.");
+      request->send(404, "text/plain", "CSV-fil findes ikke.");
     }
   });
 
@@ -231,7 +231,7 @@ void setup() {
 }
 
 /**
- * @brief Loop-funktion. Logger temperatur, håndterer webklient og overvåger WiFi og reset-knap.
+ * @brief Loop-funktion. Logger temperatur, og overvåger WiFi og reset-knap.
  */
 void loop() {
   printLog();
@@ -243,6 +243,5 @@ void loop() {
     previousMillis = millis();
   }
 
-  server.handleClient();
   delay(5000);  // 5 sekunder mellem logninger
 }
