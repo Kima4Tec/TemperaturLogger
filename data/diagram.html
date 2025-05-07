@@ -5,22 +5,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TemperaturLogger - diagram</title>
-
   <link rel="stylesheet" href="style.css">
+  <script src="chart.js"></script>
+  <script src="papaparse.min.js"></script>
 </head>
+
 
 <body>
   <div class="nav">
-    <!-- checkbox to set when window is smaller than 600px -->
     <input type="checkbox" id="nav-check">
-
     <div class="nav-header">
-      <div class="nav-title">
-        TemperaturLogger
-      </div>
+      <div class="nav-title">TemperaturLogger</div>
     </div>
-
-    <!-- Show the hamburgermenu -->
     <div class="nav-btn">
       <label for="nav-check">
         <span></span>
@@ -28,7 +24,6 @@
         <span></span>
       </label>
     </div>
-
     <div class="nav-links">
       <a href="/" target="_top">Home</a>
       <a href="/output.csv" target="_top">Hent csv-fil</a>
@@ -38,4 +33,76 @@
     </div>
   </div>
 
+  <!-- Tilføj Canvas for diagrammet -->
+  <div style="padding: 20px; max-width: 800px; margin: auto;">
+    <h2>Temperatur Diagram</h2>
+    <canvas id="temperatureChart" width="400" height="200"></canvas>
+  </div>
+
+  <!-- Dit JavaScript til at hente og vise data -->
+  <script>
+    // Hent CSV-filen og parse den
+    fetch('/output.csv') // Erstat med den rigtige rute til din CSV-fil
+      .then(response => response.text())
+      .then(csvData => {
+        Papa.parse(csvData, {
+          header: true,
+          dynamicTyping: true,
+          skipEmptyLines: true,
+          complete: function(results) {
+            const data = results.data;
+            console.log("Data fra CSV:", data);
+  
+            // Arrays til tider og temperaturer
+            const labels = [];
+            const temperatures = [];
+  
+            data.forEach(row => {
+              if (!row.Time || !row.Temperature) return; // Spring ugyldige rækker over
+              labels.push(row.Time); // Brug præcise tidsstempel for x-aksen
+              temperatures.push(row.Temperature); // Brug temperatur for y-aksen
+            });
+  
+            // Opret diagrammet
+            const ctx = document.getElementById('temperatureChart').getContext('2d');
+            new Chart(ctx, {
+              type: 'bar', // Brug en linje-graf for at vise alle temperaturmålinger
+              data: {
+                labels: labels, // Tidsstempler
+                datasets: [{
+                  label: 'Temperatur',
+                  data: temperatures, // Temperaturdata
+                  borderColor: 'rgba(75, 192, 192, 1)', // Farve på linjen
+                  fill: false, // Udfyld ikke området under linjen
+                  tension: 0.1
+                }]
+              },
+              options: {
+                responsive: true,
+                scales: {
+                  x: {
+                    title: {
+                      display: true,
+                      text: 'Tid'
+                    },
+                    ticks: {
+                      autoSkip: true,
+                      maxTicksLimit: 20 // Skru ned for antallet af x-aksen mærker
+                    }
+                  },
+                  y: {
+                    title: {
+                      display: true,
+                      text: 'Temperatur (°C)'
+                    }
+                  }
+                }
+              }
+            });
+          }
+        });
+      })
+      .catch(error => console.error('Fejl ved hentning af CSV:', error));
+  </script>
+  
 </body>

@@ -50,6 +50,7 @@ void initWiFi() {
   if (!res) {
     Serial.println("WiFi forbindelse mislykkedes - genstarter");
     delay(3000);
+
     ESP.restart();
   }
   Serial.println("WiFi tilsluttet!");
@@ -97,6 +98,8 @@ void checkResetButton() {
       resetInitiated = true;
     } else if (millis() - buttonPressStart >= 10000) {
       Serial.println("Reset udført efter 10 sek. knaptryk!");
+      WiFiManager wm;
+      wm.resetSettings();
       ESP.restart(); // Udfør software-reset
     }
   } else {
@@ -202,7 +205,13 @@ server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {
   server.on("/style.css", HTTP_GET, [](AsyncWebServerRequest *request) {
     request->send(SPIFFS, "/style.css", "text/css");
   });
-  
+  //charts.js
+  server.on("/chart.js", HTTP_GET, [](AsyncWebServerRequest *request) {
+    request->send(SPIFFS, "/chart.js", "application/javascript");
+  });
+  server.on("/papaparse.min.js", HTTP_GET, [](AsyncWebServerRequest *request) {
+    request->send(SPIFFS, "/papaparse.min.js", "application/javascript");
+  });
   
 
   server.on("/temperature", HTTP_GET, [](AsyncWebServerRequest *request) {
@@ -274,5 +283,5 @@ void loop() {
     previousMillis = millis();
   }
 
-  delay(5000);  // 5 sekunder mellem logninger
+  delay(300000);  // 5 minutter mellem logninger
 }
