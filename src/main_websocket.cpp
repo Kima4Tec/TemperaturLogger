@@ -87,7 +87,8 @@ void appendToCSV(const char* filename, const char* time, float temperature) {
 }
 
 /**
- * @brief Tjekker om reset-knappen holdes nede i 10 sekunder og genstarter derefter ESP32.
+ * @brief Tjekker om reset-knappen holdes nede i 10 sekunder (LOW) ved først at måle tiden og genstarter derefter ESP32 og udfører software-reset. 
+ * Når knappen ikke længere holdes nede sættes resetInitiated = false
  */
 void checkResetButton() {
   if (digitalRead(RESET_BUTTON_PIN) == LOW) {
@@ -96,7 +97,7 @@ void checkResetButton() {
       resetInitiated = true;
     } else if (millis() - buttonPressStart >= 10000) {
       Serial.println("Reset udført efter 10 sek. knaptryk!");
-      ESP.restart();
+      ESP.restart(); // Udfør software-reset
     }
   } else {
     resetInitiated = false;
@@ -157,6 +158,7 @@ void setup() {
     return;
   }
 
+  
   // Vent på gyldig temperatur
   sensors.requestTemperatures();
   float tempC = sensors.getTempCByIndex(0);
@@ -177,16 +179,24 @@ void setup() {
   strftime(timeString, sizeof(timeString), "%Y-%m-%d %H:%M:%S", &timeinfo);
   appendToCSV(filename, timeString, tempC);
 
-  // Webserver routes (Async-style)
-  server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {
-    File file = SPIFFS.open("/index.html", "r");
-    if (!file) {
-      request->send(500, "text/plain", "index.html ikke fundet");
-      return;
-    }
-    request->send(file, "text/html");
-    file.close();
+// Webserver routes (Async-style)
+server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {
+    request->send(SPIFFS, "/index.html", "text/html");
   });
+  server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {
+    request->send(SPIFFS, "/wificonf.html", "text/html");
+  });
+  server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {
+    request->send(SPIFFS, "/diagram.html", "text/html");
+  });
+  server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {
+    request->send(SPIFFS, "/service.html", "text/html");
+  });
+  server.on("/style.css", HTTP_GET, [](AsyncWebServerRequest *request) {
+    request->send(SPIFFS, "/style.css", "text/css");
+  });
+  
+  
 
   server.on("/temperature", HTTP_GET, [](AsyncWebServerRequest *request) {
     struct tm now;
@@ -205,13 +215,11 @@ void setup() {
   });
 
   server.on(filename, HTTP_GET, [](AsyncWebServerRequest *request) {
-    File file = SPIFFS.open(filename, "r");
-    if (!file) {
+    if (!SPIFFS.exists(filename)) {
       request->send(500, "text/plain", "CSV-fil ikke fundet");
       return;
     }
-    request->send(file, "text/csv");
-    file.close();
+    request->send(SPIFFS, filename, "text/csv");
   });
 
   server.on("/delete", HTTP_GET, [](AsyncWebServerRequest *request) {
@@ -222,6 +230,22 @@ void setup() {
       request->send(404, "text/plain", "CSV-fil findes ikke.");
     }
   });
+  server.on("/wifi", HTTP_POST, [](AsyncWebServerRequest *request) {
+    String ssid, password;
+  
+    if (request->hasParam("ssid", true) && request->hasParam("password", true)) {
+      ssid = request->getParam("ssid", true)->value();
+      password = request->getParam("password", true)->value();
+  
+      request->send(200, "text/plain", "Forbinder til: " + ssid);
+  
+      WiFi.disconnect();
+      WiFi.begin(ssid.c_str(), password.c_str());
+    } else {
+      request->send(400, "text/plain", "SSID eller adgangskode mangler");
+    }
+  });
+  
 
   // Tilføj WebSocket handler
   ws.onEvent(onWebSocketEvent);

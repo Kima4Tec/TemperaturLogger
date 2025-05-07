@@ -18,6 +18,41 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
   }
+  .wifi-form input,
+  .wifi-button {
+      padding: 10px;
+      font-size: 1em;
+      width: 100%;
+      box-sizing: border-box;
+      border-radius: 5px;
+    }
+
+    .wifi-button {
+      background-color: #70a7e2;
+      transition-duration: 0.4s;
+      color: white;
+      border: none;
+    }
+    .wifi-button:hover {
+      background-color: #4f8fd0;
+    }
+    
+    .wifi-button:active {
+      background-color: #3e78b5;
+    }
+    
+
+    .wifi-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1em;
+      max-width: 300px;
+      margin: auto;
+      margin-top: 1em;
+      font-size: 16px;
+      
+    }
+  
   
   .btn:hover {
     background-color: #5b92cd;
