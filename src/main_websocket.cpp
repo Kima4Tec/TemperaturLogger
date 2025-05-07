@@ -180,18 +180,25 @@ void setup() {
   appendToCSV(filename, timeString, tempC);
 
 // Webserver routes (Async-style)
+// Root-side (forside)
 server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {
     request->send(SPIFFS, "/index.html", "text/html");
   });
-  server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {
+  
+  // Øvrige HTML-sider
+  server.on("/wificonf.html", HTTP_GET, [](AsyncWebServerRequest *request) {
     request->send(SPIFFS, "/wificonf.html", "text/html");
   });
-  server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {
+  
+  server.on("/diagram.html", HTTP_GET, [](AsyncWebServerRequest *request) {
     request->send(SPIFFS, "/diagram.html", "text/html");
   });
-  server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {
+  
+  server.on("/service.html", HTTP_GET, [](AsyncWebServerRequest *request) {
     request->send(SPIFFS, "/service.html", "text/html");
   });
+  
+  // CSS
   server.on("/style.css", HTTP_GET, [](AsyncWebServerRequest *request) {
     request->send(SPIFFS, "/style.css", "text/css");
   });
