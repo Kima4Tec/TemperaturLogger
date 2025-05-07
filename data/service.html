@@ -5,22 +5,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TemperaturLogger - Service</title>
-
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
   <div class="nav">
-    <!-- checkbox to set when window is smaller than 600px -->
     <input type="checkbox" id="nav-check">
-
     <div class="nav-header">
       <div class="nav-title">
         TemperaturLogger
       </div>
     </div>
-
-    <!-- Show the hamburgermenu -->
     <div class="nav-btn">
       <label for="nav-check">
         <span></span>
@@ -28,7 +23,6 @@
         <span></span>
       </label>
     </div>
-
     <div class="nav-links">
       <a href="/" target="_top">Home</a>
       <a href="/output.csv" target="_top">Hent csv-fil</a>
@@ -37,7 +31,38 @@
       <a href="wificonf.html" target="_top">WiFi-konfiguration</a>
     </div>
   </div>
-  <button class="btn" id="button1"><a href="#">Slet csv-fil</a></button>
-  <button class="btn" id="button2"><a href="#">Nulstil Wifi</a></button>
-  
+
+  <button class="btn" id="button1">Slet csv-fil</button>
+  <button class="btn" id="button2">Nulstil Wifi</button>
+
+  <script>
+    const deleteButton = document.getElementById('button1');
+    const resetWifiButton = document.getElementById('button2');
+
+    deleteButton.addEventListener('click', function(e) {
+      e.preventDefault();
+      fetch('/delete')
+        .then(response => response.text())
+        .then(data => {
+          alert(data);
+        })
+        .catch(error => {
+          alert('Fejl ved sletning af CSV-fil: ' + error);
+        });
+    });
+
+    resetWifiButton.addEventListener('click', function(e) {
+      e.preventDefault();
+      fetch('/resetwifi')
+        .then(response => response.text())
+        .then(data => {
+          alert(data);
+        })
+        .catch(error => {
+          alert('Fejl ved nulstilling af WiFi: ' + error);
+        });
+    });
+  </script>
 </body>
+
+</html>

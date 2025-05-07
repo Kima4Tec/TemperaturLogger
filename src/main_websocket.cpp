@@ -246,17 +246,41 @@ server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {
       request->send(404, "text/plain", "CSV-fil findes ikke.");
     }
   });
+
+  server.on("/resetwifi", HTTP_GET, [](AsyncWebServerRequest *request) {
+    WiFiManager wm;
+    wm.resetSettings();
+    request->send(200, "text/plain", "WiFi indstillinger er nulstillet.");
+    ESP.restart(); // Genstart ESP32
+  });
+
   server.on("/wifi", HTTP_POST, [](AsyncWebServerRequest *request) {
-    String ssid, password;
-  
     if (request->hasParam("ssid", true) && request->hasParam("password", true)) {
-      ssid = request->getParam("ssid", true)->value();
-      password = request->getParam("password", true)->value();
+      String ssid = request->getParam("ssid", true)->value();
+      String password = request->getParam("password", true)->value();
   
-      request->send(200, "text/plain", "Forbinder til: " + ssid);
+      Serial.println("Modtaget nye WiFi oplysninger:");
+      Serial.println("SSID: " + ssid);
   
       WiFi.disconnect();
       WiFi.begin(ssid.c_str(), password.c_str());
+  
+      // Vent på forbindelse i op til 10 sekunder
+      unsigned long startAttemptTime = millis();
+      while (WiFi.status() != WL_CONNECTED && millis() - startAttemptTime < 10000) {
+        delay(500);
+        Serial.print(".");
+      }
+  
+      if (WiFi.status() == WL_CONNECTED) {
+        String ip = WiFi.localIP().toString();
+        Serial.println("\nWiFi tilsluttet! IP: " + ip);
+        request->send(200, "text/plain", "Tilsluttet! IP: " + ip);
+      } else {
+        Serial.println("\nKunne ikke oprette forbindelse til WiFi.");
+        request->send(500, "text/plain", "Kunne ikke oprette forbindelse til WiFi");
+      }
+  
     } else {
       request->send(400, "text/plain", "SSID eller adgangskode mangler");
     }
@@ -274,14 +298,20 @@ server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {
  * @brief Loop-funktion. Logger temperatur, og overvåger WiFi og reset-knap.
  */
 void loop() {
-  printLog();
-  checkResetButton();
-
-  if ((WiFi.status() != WL_CONNECTED) && (millis() - previousMillis >= interval)) {
-    WiFi.disconnect();
-    WiFi.reconnect();
-    previousMillis = millis();
+    static unsigned long lastLogTime = 0;
+    unsigned long currentMillis = millis();
+  
+    checkResetButton();  // Kaldes hele tiden
+  
+    if ((WiFi.status() != WL_CONNECTED) && (currentMillis - previousMillis >= interval)) {
+      WiFi.disconnect();
+      WiFi.reconnect();
+      previousMillis = currentMillis;
+    }
+  
+    if (currentMillis - lastLogTime >= 300000) { // 5 minutter
+      printLog();
+      lastLogTime = currentMillis;
+    }
   }
-
-  delay(300000);  // 5 minutter mellem logninger
-}
+  
