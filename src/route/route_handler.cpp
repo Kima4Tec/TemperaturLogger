@@ -1,6 +1,5 @@
 #include <WiFiManager.h> 
 #include <ESPAsyncWebServer.h>    // Asynkront webserver/websocket-bibliotek til ESP32
-   
 #include <SPIFFS.h>   
 #include "route_handler.h"
 
