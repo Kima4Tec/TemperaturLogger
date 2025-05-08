@@ -39,70 +39,112 @@
     <canvas id="temperatureChart" width="400" height="200"></canvas>
   </div>
 
-  <!-- Dit JavaScript til at hente og vise data -->
+  <!-- Henter og viser data -->
   <script>
-    // Hent CSV-filen og parse den
-    fetch('/output.csv') // Erstat med den rigtige rute til din CSV-fil
-      .then(response => response.text())
-      .then(csvData => {
-        Papa.parse(csvData, {
-          header: true,
-          dynamicTyping: true,
-          skipEmptyLines: true,
-          complete: function(results) {
-            const data = results.data;
-            console.log("Data fra CSV:", data);
+    const ctx = document.getElementById('temperatureChart').getContext('2d');
   
-            // Arrays til tider og temperaturer
-            const labels = [];
-            const temperatures = [];
-  
-            data.forEach(row => {
-              if (!row.Time || !row.Temperature) return; // Spring ugyldige rækker over
-              labels.push(row.Time); // Brug præcise tidsstempel for x-aksen
-              temperatures.push(row.Temperature); // Brug temperatur for y-aksen
-            });
-  
-            // Opret diagrammet
-            const ctx = document.getElementById('temperatureChart').getContext('2d');
-            new Chart(ctx, {
-              type: 'bar', // Brug en linje-graf for at vise alle temperaturmålinger
-              data: {
-                labels: labels, // Tidsstempler
-                datasets: [{
-                  label: 'Temperatur',
-                  data: temperatures, // Temperaturdata
-                  borderColor: 'rgba(75, 192, 192, 1)', // Farve på linjen
-                  fill: false, // Udfyld ikke området under linjen
-                  tension: 0.1
-                }]
-              },
-              options: {
-                responsive: true,
-                scales: {
-                  x: {
-                    title: {
-                      display: true,
-                      text: 'Tid'
-                    },
-                    ticks: {
-                      autoSkip: true,
-                      maxTicksLimit: 20 // Skru ned for antallet af x-aksen mærker
-                    }
-                  },
-                  y: {
-                    title: {
-                      display: true,
-                      text: 'Temperatur (°C)'
-                    }
-                  }
-                }
-              }
-            });
+    // Opret tom graf
+    const chart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: [],
+        datasets: [{
+          label: 'Temperatur',
+          data: [],
+          borderColor: 'rgba(75, 192, 192, 1)',
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          fill: true,
+          tension: 0.1
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Tid'
+            },
+            ticks: {
+              maxRotation: 90,
+              minRotation: 45,
+              autoSkip: true,
+              maxTicksLimit: 20
+            }
+          },
+          y: {
+            title: {
+              display: true,
+              text: 'Temperatur (°C)'
+            }
           }
+        }
+      }
+    });
+  
+    // Første indlæsning fra CSV (historiske data)
+    function loadCSV() {
+      fetch('/output.csv')
+        .then(response => response.text())
+        .then(csvData => {
+          Papa.parse(csvData, {
+            header: true,
+            dynamicTyping: true,
+            skipEmptyLines: true,
+            complete: function(results) {
+              const data = results.data;
+              const labels = [];
+              const temperatures = [];
+  
+              data.forEach(row => {
+                if (row.Time && row.Temperature) {
+                  labels.push(row.Time);
+                  temperatures.push(row.Temperature);
+                }
+              });
+  
+              chart.data.labels = labels;
+              chart.data.datasets[0].data = temperatures;
+              chart.update();
+            }
+          });
         });
-      })
-      .catch(error => console.error('Fejl ved hentning af CSV:', error));
+    }
+  
+    // Kald ved opstart
+    loadCSV();
+  
+    // WebSocket til live-opdatering
+    const socket = new WebSocket(`ws://${window.location.host}/ws`);
+  
+    socket.onmessage = function (event) {
+      const data = JSON.parse(event.data);
+      const time = new Date().toLocaleTimeString(); // Brug evt. timestamp fra server
+  
+      // Tilføj til graf
+      chart.data.labels.push(time);
+      chart.data.datasets[0].data.push(data.temperature);
+  
+      // Begræns antal datapunkter (fx 50)
+      const maxPoints = 50;
+      if (chart.data.labels.length > maxPoints) {
+        chart.data.labels.shift();
+        chart.data.datasets[0].data.shift();
+      }
+  
+      chart.update();
+    };
+  
+    socket.onerror = (err) => {
+      console.error("WebSocket-fejl:", err);
+    };
+  
+    socket.onclose = () => {
+      console.warn("WebSocket lukket – prøver ikke igen");
+    };
   </script>
   
+  
+  
 </body>
+</html>

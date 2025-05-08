@@ -53,14 +53,12 @@
 
     resetWifiButton.addEventListener('click', function(e) {
       e.preventDefault();
+      alert("Nulstiller Wifi...")
       fetch('/resetwifi')
         .then(response => response.text())
         .then(data => {
           alert(data);
         })
-        .catch(error => {
-          alert('Fejl ved nulstilling af WiFi: ' + error);
-        });
     });
   </script>
 </body>
