@@ -10,7 +10,6 @@
   <script src="papaparse.min.js"></script>
 </head>
 
-
 <body>
   <div class="nav">
     <input type="checkbox" id="nav-check">
@@ -36,14 +35,23 @@
   <!-- Tilføj Canvas for diagrammet -->
   <div style="padding: 20px; max-width: 800px; margin: auto;">
     <h2>Temperatur Diagram</h2>
+
+    <label for="pointCount">Vis antal datapunkter:</label>
+    <select id="pointCount">
+      <option value="25">25</option>
+      <option value="50" selected>50</option>
+      <option value="100">100</option>
+      <option value="200">200</option>
+      <option value="all">Alle</option>
+    </select>
+
     <canvas id="temperatureChart" width="400" height="200"></canvas>
   </div>
 
   <!-- Henter og viser data -->
   <script>
     const ctx = document.getElementById('temperatureChart').getContext('2d');
-  
-    // Opret tom graf
+
     const chart = new Chart(ctx, {
       type: 'bar',
       data: {
@@ -81,9 +89,15 @@
         }
       }
     });
-  
-    // Første indlæsning fra CSV (historiske data)
+
+    function getSelectedMaxPoints() {
+      const value = document.getElementById('pointCount').value;
+      return value === 'all' ? Infinity : parseInt(value);
+    }
+
     function loadCSV() {
+      const maxPoints = getSelectedMaxPoints();
+
       fetch('/output.csv')
         .then(response => response.text())
         .then(csvData => {
@@ -91,18 +105,13 @@
             header: true,
             dynamicTyping: true,
             skipEmptyLines: true,
-            complete: function(results) {
-              const data = results.data;
-              const labels = [];
-              const temperatures = [];
-  
-              data.forEach(row => {
-                if (row.Time && row.Temperature) {
-                  labels.push(row.Time);
-                  temperatures.push(row.Temperature);
-                }
-              });
-  
+            complete: function (results) {
+              const allData = results.data.filter(row => row.Time && row.Temperature);
+              const slicedData = maxPoints === Infinity ? allData : allData.slice(-maxPoints);
+
+              const labels = slicedData.map(row => row.Time);
+              const temperatures = slicedData.map(row => row.Temperature);
+
               chart.data.labels = labels;
               chart.data.datasets[0].data = temperatures;
               chart.update();
@@ -110,41 +119,39 @@
           });
         });
     }
-  
+
+    document.getElementById('pointCount').addEventListener('change', loadCSV);
+
     // Kald ved opstart
     loadCSV();
-  
+
     // WebSocket til live-opdatering
     const socket = new WebSocket(`ws://${window.location.host}/ws`);
-  
+
     socket.onmessage = function (event) {
       const data = JSON.parse(event.data);
-      const time = new Date().toLocaleTimeString(); // Brug evt. timestamp fra server
-  
-      // Tilføj til graf
+      const time = new Date().toLocaleTimeString();
+
       chart.data.labels.push(time);
       chart.data.datasets[0].data.push(data.temperature);
-  
-      // Begræns antal datapunkter (fx 50)
-      const maxPoints = 50;
+
+      const maxPoints = getSelectedMaxPoints();
       if (chart.data.labels.length > maxPoints) {
         chart.data.labels.shift();
         chart.data.datasets[0].data.shift();
       }
-  
+
       chart.update();
     };
-  
+
     socket.onerror = (err) => {
       console.error("WebSocket-fejl:", err);
     };
-  
+
     socket.onclose = () => {
       console.warn("WebSocket lukket – prøver ikke igen");
     };
   </script>
-  
-  
-  
+
 </body>
 </html>
