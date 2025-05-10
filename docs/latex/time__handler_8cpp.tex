@@ -1,0 +1,49 @@
+\doxysection{src/time/time\+\_\+handler.cpp File Reference}
+\hypertarget{time__handler_8cpp}{}\label{time__handler_8cpp}\index{src/time/time\_handler.cpp@{src/time/time\_handler.cpp}}
+{\ttfamily \#include "{}time\+\_\+handler.\+h"{}}\newline
+Include dependency graph for time\+\_\+handler.\+cpp\+:
+% FIG 0
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{time__handler_8cpp_a525911a7ceacbefbe342d1ebd29c884f}{set\+Timezone}} (String timezone)
+\begin{DoxyCompactList}\small\item\em Sætter tidszonen. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{time__handler_8cpp_af1e607153008079e9f9623bd2d1f2c75}{init\+Time}} (String timezone)
+\begin{DoxyCompactList}\small\item\em Initialiserer NTP-\/tid og sætter tidszone. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{time__handler_8cpp_af1e607153008079e9f9623bd2d1f2c75}\index{time\_handler.cpp@{time\_handler.cpp}!initTime@{initTime}}
+\index{initTime@{initTime}!time\_handler.cpp@{time\_handler.cpp}}
+\doxysubsubsection{\texorpdfstring{initTime()}{initTime()}}
+{\footnotesize\ttfamily \label{time__handler_8cpp_af1e607153008079e9f9623bd2d1f2c75} 
+void init\+Time (\begin{DoxyParamCaption}\item[{String}]{timezone}{}\end{DoxyParamCaption})}
+
+
+
+Initialiserer NTP-\/tid og sætter tidszone. 
+
+Initialiserer NTP-\/tidsfunktionen med den angivne tidszone.
+
+
+\begin{DoxyParams}{Parameters}
+{\em timezone} & Tidszone-\/streng \\
+\hline
+\end{DoxyParams}
+\Hypertarget{time__handler_8cpp_a525911a7ceacbefbe342d1ebd29c884f}\index{time\_handler.cpp@{time\_handler.cpp}!setTimezone@{setTimezone}}
+\index{setTimezone@{setTimezone}!time\_handler.cpp@{time\_handler.cpp}}
+\doxysubsubsection{\texorpdfstring{setTimezone()}{setTimezone()}}
+{\footnotesize\ttfamily \label{time__handler_8cpp_a525911a7ceacbefbe342d1ebd29c884f} 
+void set\+Timezone (\begin{DoxyParamCaption}\item[{String}]{timezone}{}\end{DoxyParamCaption})}
+
+
+
+Sætter tidszonen. 
+
+Sætter tidszonen for ESP32-\/systemet.
+
+
+\begin{DoxyParams}{Parameters}
+{\em timezone} & Tidszone-\/streng (POSIX-\/format, som bruges i NTP-\/konfiguration (Network Time Protocol) til at angive tidszoner.) \\
+\hline
+\end{DoxyParams}

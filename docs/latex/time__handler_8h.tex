@@ -1,0 +1,65 @@
+\doxysection{src/time/time\+\_\+handler.h File Reference}
+\hypertarget{time__handler_8h}{}\label{time__handler_8h}\index{src/time/time\_handler.h@{src/time/time\_handler.h}}
+{\ttfamily \#include $<$Arduino.\+h$>$}\newline
+Include dependency graph for time\+\_\+handler.\+h\+:
+% FIG 0
+This graph shows which files directly or indirectly include this file\+:
+% FIG 1
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{time__handler_8h_a525911a7ceacbefbe342d1ebd29c884f}{set\+Timezone}} (String timezone)
+\begin{DoxyCompactList}\small\item\em Sætter tidszonen for ESP32-\/systemet. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{time__handler_8h_af1e607153008079e9f9623bd2d1f2c75}{init\+Time}} (String timezone)
+\begin{DoxyCompactList}\small\item\em Initialiserer NTP-\/tidsfunktionen med den angivne tidszone. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{time__handler_8h_af1e607153008079e9f9623bd2d1f2c75}\index{time\_handler.h@{time\_handler.h}!initTime@{initTime}}
+\index{initTime@{initTime}!time\_handler.h@{time\_handler.h}}
+\doxysubsubsection{\texorpdfstring{initTime()}{initTime()}}
+{\footnotesize\ttfamily \label{time__handler_8h_af1e607153008079e9f9623bd2d1f2c75} 
+void init\+Time (\begin{DoxyParamCaption}\item[{String}]{timezone}{}\end{DoxyParamCaption})}
+
+
+
+Initialiserer NTP-\/tidsfunktionen med den angivne tidszone. 
+
+Funktionen sætter tidszonen og starter tidssynkronisering via NTP-\/servere. Kaldes i \doxylink{main_8cpp_a4fc01d736fe50cf5b977f755b675f11d}{setup()} i main.
+
+
+\begin{DoxyParams}{Parameters}
+{\em timezone} & Tidszone-\/streng i POSIX-\/format.\\
+\hline
+\end{DoxyParams}
+Initialiserer NTP-\/tidsfunktionen med den angivne tidszone.
+
+
+\begin{DoxyParams}{Parameters}
+{\em timezone} & Tidszone-\/streng \\
+\hline
+\end{DoxyParams}
+\Hypertarget{time__handler_8h_a525911a7ceacbefbe342d1ebd29c884f}\index{time\_handler.h@{time\_handler.h}!setTimezone@{setTimezone}}
+\index{setTimezone@{setTimezone}!time\_handler.h@{time\_handler.h}}
+\doxysubsubsection{\texorpdfstring{setTimezone()}{setTimezone()}}
+{\footnotesize\ttfamily \label{time__handler_8h_a525911a7ceacbefbe342d1ebd29c884f} 
+void set\+Timezone (\begin{DoxyParamCaption}\item[{String}]{timezone}{}\end{DoxyParamCaption})}
+
+
+
+Sætter tidszonen for ESP32-\/systemet. 
+
+Funktionen konfigurerer variablen for tidszone, så korrekt dansk tid kan hentes via NTP.
+
+
+\begin{DoxyParams}{Parameters}
+{\em timezone} & Tidszone-\/streng i POSIX-\/format, sat til "{}\+CET-\/1\+CEST,\+M3.\+5.\+0/2,\+M10.\+5.\+0/3"{}.\\
+\hline
+\end{DoxyParams}
+Sætter tidszonen for ESP32-\/systemet.
+
+
+\begin{DoxyParams}{Parameters}
+{\em timezone} & Tidszone-\/streng (POSIX-\/format, som bruges i NTP-\/konfiguration (Network Time Protocol) til at angive tidszoner.) \\
+\hline
+\end{DoxyParams}

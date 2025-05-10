@@ -1,0 +1,31 @@
+\doxysection{src/route/route\+\_\+handler.cpp File Reference}
+\hypertarget{route__handler_8cpp}{}\label{route__handler_8cpp}\index{src/route/route\_handler.cpp@{src/route/route\_handler.cpp}}
+{\ttfamily \#include $<$Wi\+Fi\+Manager.\+h$>$}\newline
+{\ttfamily \#include $<$ESPAsync\+Web\+Server.\+h$>$}\newline
+{\ttfamily \#include $<$SPIFFS.\+h$>$}\newline
+{\ttfamily \#include "{}route\+\_\+handler.\+h"{}}\newline
+Include dependency graph for route\+\_\+handler.\+cpp\+:
+% FIG 0
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{route__handler_8cpp_a553ce9cca044d40931e5cbe9deb407e4}{setup\+Routes}} ()
+\begin{DoxyCompactList}\small\item\em \texorpdfstring{$<$}{<} SPIFFS-\/filsystem til lagring af webfiler \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{route__handler_8cpp_a553ce9cca044d40931e5cbe9deb407e4}\index{route\_handler.cpp@{route\_handler.cpp}!setupRoutes@{setupRoutes}}
+\index{setupRoutes@{setupRoutes}!route\_handler.cpp@{route\_handler.cpp}}
+\doxysubsubsection{\texorpdfstring{setupRoutes()}{setupRoutes()}}
+{\footnotesize\ttfamily \label{route__handler_8cpp_a553ce9cca044d40931e5cbe9deb407e4} 
+void setup\+Routes (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+\texorpdfstring{$<$}{<} SPIFFS-\/filsystem til lagring af webfiler 
+
+\texorpdfstring{$<$}{<} Bibliotek til nem Wi\+Fi-\/konfiguration \texorpdfstring{$<$}{<} Asynkron webserver/websocket-\/bibliotek til ESP32
+
+Registrerer alle HTTP-\/ruter til webserveren.
+
+Webserveren håndterer HTML, CSS/\+JS, temperaturdata, Wi\+Fi-\/konfiguration og CSV-\/filer. Inkluderer fejlhåndtering ved manglende filer eller hardwarefejl. 

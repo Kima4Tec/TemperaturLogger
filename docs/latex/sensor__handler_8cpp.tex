@@ -1,0 +1,91 @@
+\doxysection{src/sensor/sensor\+\_\+handler.cpp File Reference}
+\hypertarget{sensor__handler_8cpp}{}\label{sensor__handler_8cpp}\index{src/sensor/sensor\_handler.cpp@{src/sensor/sensor\_handler.cpp}}
+{\ttfamily \#include $<$Wi\+Fi.\+h$>$}\newline
+{\ttfamily \#include $<$SPIFFS.\+h$>$}\newline
+{\ttfamily \#include $<$ESPAsync\+Web\+Server.\+h$>$}\newline
+{\ttfamily \#include $<$Async\+TCP.\+h$>$}\newline
+{\ttfamily \#include "{}sensor\+\_\+handler.\+h"{}}\newline
+{\ttfamily \#include "{}csv/csv\+\_\+handler.\+h"{}}\newline
+Include dependency graph for sensor\+\_\+handler.\+cpp\+:
+% FIG 0
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{sensor__handler_8cpp_ad48f188855a28e8226ea9d793ebd0264}{get\+Formatted\+Time}} (char \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{main_8cpp_a6b56dd590f8d19add3d920bb310e5934}{time\+String}})
+\begin{DoxyCompactList}\small\item\em Henter og formaterer den aktuelle tid som en streng. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{sensor__handler_8cpp_a1829ab22d39dfc0b09544b4f1ad1ea02}{log\+Temperature\+To\+CSV}} (Dallas\+Temperature \&\mbox{\hyperlink{config_8h_ac7833e6f3d8254559e6b9f6bd6e5f263}{sensors}}, char \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{main_8cpp_a6b56dd590f8d19add3d920bb310e5934}{time\+String}})
+\begin{DoxyCompactList}\small\item\em Logger temperaturen og det aktuelle tidspunkt til en CSV-\/fil. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{sensor__handler_8cpp_a7cb54685ddb3c45facf6daadcc4a5f4b}{print\+Log}} ()
+\begin{DoxyCompactList}\small\item\em Læser og logger temperaturdata til både Serial og CSV samt sender dem via Web\+Socket. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sensor__handler_8cpp_a7efa5e9c7494c7d4586359300221aa5d}{filename}}
+\begin{DoxyCompactList}\small\item\em Indeholder funktioner til at hente og logge temperaturdata samt sende dem via Web\+Socket. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{sensor__handler_8cpp_ad48f188855a28e8226ea9d793ebd0264}\index{sensor\_handler.cpp@{sensor\_handler.cpp}!getFormattedTime@{getFormattedTime}}
+\index{getFormattedTime@{getFormattedTime}!sensor\_handler.cpp@{sensor\_handler.cpp}}
+\doxysubsubsection{\texorpdfstring{getFormattedTime()}{getFormattedTime()}}
+{\footnotesize\ttfamily \label{sensor__handler_8cpp_ad48f188855a28e8226ea9d793ebd0264} 
+void get\+Formatted\+Time (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{time\+String}{}\end{DoxyParamCaption})}
+
+
+
+Henter og formaterer den aktuelle tid som en streng. 
+
+Henter den aktuelle lokale tid som en formateret streng.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em time\+String} & En buffer hvor den formaterede tid (YYYY-\/\+MM-\/\+DD HH\+:\+MM\+:SS) gemmes.\\
+\hline
+\end{DoxyParams}
+Funktionen venter indtil, der er en gyldig tid via NTP og formaterer den til en læsbar streng. \Hypertarget{sensor__handler_8cpp_a1829ab22d39dfc0b09544b4f1ad1ea02}\index{sensor\_handler.cpp@{sensor\_handler.cpp}!logTemperatureToCSV@{logTemperatureToCSV}}
+\index{logTemperatureToCSV@{logTemperatureToCSV}!sensor\_handler.cpp@{sensor\_handler.cpp}}
+\doxysubsubsection{\texorpdfstring{logTemperatureToCSV()}{logTemperatureToCSV()}}
+{\footnotesize\ttfamily \label{sensor__handler_8cpp_a1829ab22d39dfc0b09544b4f1ad1ea02} 
+void log\+Temperature\+To\+CSV (\begin{DoxyParamCaption}\item[{Dallas\+Temperature \&}]{sensors}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{time\+String}{}\end{DoxyParamCaption})}
+
+
+
+Logger temperaturen og det aktuelle tidspunkt til en CSV-\/fil. 
+
+Logger den aktuelle temperatur til en CSV-\/fil.
+
+
+\begin{DoxyParams}{Parameters}
+{\em sensors} & En reference til Dallas\+Temperature-\/sensorobjektet. \\
+\hline
+{\em time\+String} & En streng med den aktuelle tid.\\
+\hline
+\end{DoxyParams}
+Funktionen venter på en gyldig temperaturmåling (-\/127.\+0 viser manglende forbindelse) og logger derefter både tid og temperatur til fil. Temperaturen fra sensor læses og der tilføjes en ny linje med tid og temperatur til CSV-\/filen. \Hypertarget{sensor__handler_8cpp_a7cb54685ddb3c45facf6daadcc4a5f4b}\index{sensor\_handler.cpp@{sensor\_handler.cpp}!printLog@{printLog}}
+\index{printLog@{printLog}!sensor\_handler.cpp@{sensor\_handler.cpp}}
+\doxysubsubsection{\texorpdfstring{printLog()}{printLog()}}
+{\footnotesize\ttfamily \label{sensor__handler_8cpp_a7cb54685ddb3c45facf6daadcc4a5f4b} 
+void print\+Log (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Læser og logger temperaturdata til både Serial og CSV samt sender dem via Web\+Socket. 
+
+Udskriver indholdet af CSV-\/logfilen til Serial Monitor.
+
+Funktionen henter det aktuelle tidspunkt og temperatur, skriver dem til Serial og CSV, og sender temperaturværdien som JSON til alle tilsluttede Web\+Socket-\/klienter. 
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{sensor__handler_8cpp_a7efa5e9c7494c7d4586359300221aa5d}\index{sensor\_handler.cpp@{sensor\_handler.cpp}!filename@{filename}}
+\index{filename@{filename}!sensor\_handler.cpp@{sensor\_handler.cpp}}
+\doxysubsubsection{\texorpdfstring{filename}{filename}}
+{\footnotesize\ttfamily \label{sensor__handler_8cpp_a7efa5e9c7494c7d4586359300221aa5d} 
+const char\texorpdfstring{$\ast$}{*} filename\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Indeholder funktioner til at hente og logge temperaturdata samt sende dem via Web\+Socket. 
+
+Filnavn for CSV-\/logfilen (defineret i \doxylink{config_8h}{config.\+h})
+
+Indeholder funktioner til at hente og logge temperaturdata samt sende dem via Web\+Socket. 

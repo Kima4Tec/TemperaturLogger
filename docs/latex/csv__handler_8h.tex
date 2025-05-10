@@ -1,0 +1,47 @@
+\doxysection{src/csv/csv\+\_\+handler.h File Reference}
+\hypertarget{csv__handler_8h}{}\label{csv__handler_8h}\index{src/csv/csv\_handler.h@{src/csv/csv\_handler.h}}
+{\ttfamily \#include "{}config.\+h"{}}\newline
+Include dependency graph for csv\+\_\+handler.\+h\+:
+% FIG 0
+This graph shows which files directly or indirectly include this file\+:
+% FIG 1
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{csv__handler_8h_ab3ee809f3af491f7e72d835c57571c58}{append\+To\+CSV}} (const char \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{main_8cpp_a7efa5e9c7494c7d4586359300221aa5d}{filename}}, const char \texorpdfstring{$\ast$}{*}time, float temperature)
+\begin{DoxyCompactList}\small\item\em Tilføjer en ny linje med tidsstempel og temperatur til en CSV-\/fil. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{csv__handler_8h_ab3ee809f3af491f7e72d835c57571c58}\index{csv\_handler.h@{csv\_handler.h}!appendToCSV@{appendToCSV}}
+\index{appendToCSV@{appendToCSV}!csv\_handler.h@{csv\_handler.h}}
+\doxysubsubsection{\texorpdfstring{appendToCSV()}{appendToCSV()}}
+{\footnotesize\ttfamily \label{csv__handler_8h_ab3ee809f3af491f7e72d835c57571c58} 
+void append\+To\+CSV (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{filename}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{time}{, }\item[{float}]{temperature}{}\end{DoxyParamCaption})}
+
+
+
+Tilføjer en ny linje med tidsstempel og temperatur til en CSV-\/fil. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & Navnet på CSV-\/filen der skal skrives til. \\
+\hline
+{\em time} & Tidsstempel som en streng (typisk i formatet "{}\+YYYY-\/\+MM-\/\+DD HH\+:\+MM\+:\+SS"{}). \\
+\hline
+{\em temperature} & Temperaturen i grader Celsius.\\
+\hline
+\end{DoxyParams}
+Tilføjer en ny linje med tidsstempel og temperatur til en CSV-\/fil.
+
+Funktionen tjekker, om CSV-\/filen allerede eksisterer. Hvis ikke, tilføjes en header\+: "{}\+Time,\+Temperature"{}. Målingen tilføjes derefter i formatet\+: tid,temperatur
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & Sti til filen \\
+\hline
+{\em time} & Tidsstempel som tekst \\
+\hline
+{\em temperature} & Målt temperatur \\
+\hline
+\end{DoxyParams}

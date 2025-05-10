@@ -1,0 +1,178 @@
+\doxysection{src/config.h File Reference}
+\hypertarget{config_8h}{}\label{config_8h}\index{src/config.h@{src/config.h}}
+{\ttfamily \#include $<$One\+Wire.\+h$>$}\newline
+{\ttfamily \#include $<$Dallas\+Temperature.\+h$>$}\newline
+{\ttfamily \#include $<$ESPAsync\+Web\+Server.\+h$>$}\newline
+{\ttfamily \#include $<$Async\+TCP.\+h$>$}\newline
+Include dependency graph for config.\+h\+:
+% FIG 0
+This graph shows which files directly or indirectly include this file\+:
+% FIG 1
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{config_8h_a4260ed8874da804fb9ef9abba200b487}{ONE\+\_\+\+WIRE\+\_\+\+BUS}}~4
+\begin{DoxyCompactList}\small\item\em Pin tilsluttet DS18\+B20 temperatursensoren. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{config_8h_a56b64973bfd6514570671a2607122199}{RESET\+\_\+\+BUTTON\+\_\+\+PIN}}~14
+\begin{DoxyCompactList}\small\item\em Pin tilsluttet reset-\/knappen. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{config_8h_ab49943e2bd1d76424d992b99ed6b1838}{WIFI\+\_\+\+AP\+\_\+\+NAME}}~"{}ESP32-\/Logger"{}
+\begin{DoxyCompactList}\small\item\em Navn på Access Point (AP), hvis ESP32 ikke tidligere har været tilsluttet Wi\+Fi. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{config_8h_ac80c92af8bf29cfe0442a28b6a7ec5a3}{WIFI\+\_\+\+AP\+\_\+\+PASSWORD}}~"{}admin123"{}
+\begin{DoxyCompactList}\small\item\em Adgangskode til Access Point (AP). \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{config_8h_a541689b4b95fb5d3c4b6d1d9c23b1b3e}{DATA\+\_\+\+FILENAME}}~"{}/output.\+csv"{}
+\begin{DoxyCompactList}\small\item\em Filnavn for CSV-\/datafil gemt i SPIFFS. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{config_8h_a9aa67f3297f612883e61a753179f7848}{CSV\+\_\+\+HEADER}} = "{}Time,Temperature"{}
+\begin{DoxyCompactList}\small\item\em Header til CSV-\/filen. \end{DoxyCompactList}\item 
+unsigned long \mbox{\hyperlink{config_8h_a60879f0ffc31ebcea6387a805d59a604}{button\+Press\+Start}}
+\begin{DoxyCompactList}\small\item\em Tidsstempel for hvornår reset-\/knappen blev trykket ned. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{config_8h_a4866146b44160524b54141fa0a443e49}{reset\+Initiated}}
+\begin{DoxyCompactList}\small\item\em Angiver om reset-\/sekvensen er startet. \end{DoxyCompactList}\item 
+One\+Wire \mbox{\hyperlink{config_8h_a2b3be72791cfd8f5eed0c046307eece8}{one\+Wire}}
+\begin{DoxyCompactList}\small\item\em One\+Wire-\/instans til kommunikation med sensorer. \end{DoxyCompactList}\item 
+Dallas\+Temperature \mbox{\hyperlink{config_8h_ac7833e6f3d8254559e6b9f6bd6e5f263}{sensors}}
+\begin{DoxyCompactList}\small\item\em Dallas\+Temperature-\/instans til håndtering af temperaturmåling. \end{DoxyCompactList}\item 
+Async\+Web\+Server \mbox{\hyperlink{config_8h_a56916c67f21f332014c1c19b200d45f3}{server}}
+\begin{DoxyCompactList}\small\item\em Webserver-\/instans til håndtering af HTTP-\/forespørgsler. \end{DoxyCompactList}\item 
+Async\+Web\+Socket \mbox{\hyperlink{config_8h_acbecb4e4203752ebd4b2d57ee6e376fd}{ws}}
+\begin{DoxyCompactList}\small\item\em Web\+Socket-\/instans til realtidskommunikation med klienter. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{config_8h_ad53c51e9c6ebec35c453a42ea91b9e13}{is\+Reset}}
+\begin{DoxyCompactList}\small\item\em Angiver om enheden er blevet nulstillet. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{config_8h_a541689b4b95fb5d3c4b6d1d9c23b1b3e}\index{config.h@{config.h}!DATA\_FILENAME@{DATA\_FILENAME}}
+\index{DATA\_FILENAME@{DATA\_FILENAME}!config.h@{config.h}}
+\doxysubsubsection{\texorpdfstring{DATA\_FILENAME}{DATA\_FILENAME}}
+{\footnotesize\ttfamily \label{config_8h_a541689b4b95fb5d3c4b6d1d9c23b1b3e} 
+\#define DATA\+\_\+\+FILENAME~"{}/output.\+csv"{}}
+
+
+
+Filnavn for CSV-\/datafil gemt i SPIFFS. 
+
+\Hypertarget{config_8h_a4260ed8874da804fb9ef9abba200b487}\index{config.h@{config.h}!ONE\_WIRE\_BUS@{ONE\_WIRE\_BUS}}
+\index{ONE\_WIRE\_BUS@{ONE\_WIRE\_BUS}!config.h@{config.h}}
+\doxysubsubsection{\texorpdfstring{ONE\_WIRE\_BUS}{ONE\_WIRE\_BUS}}
+{\footnotesize\ttfamily \label{config_8h_a4260ed8874da804fb9ef9abba200b487} 
+\#define ONE\+\_\+\+WIRE\+\_\+\+BUS~4}
+
+
+
+Pin tilsluttet DS18\+B20 temperatursensoren. 
+
+\Hypertarget{config_8h_a56b64973bfd6514570671a2607122199}\index{config.h@{config.h}!RESET\_BUTTON\_PIN@{RESET\_BUTTON\_PIN}}
+\index{RESET\_BUTTON\_PIN@{RESET\_BUTTON\_PIN}!config.h@{config.h}}
+\doxysubsubsection{\texorpdfstring{RESET\_BUTTON\_PIN}{RESET\_BUTTON\_PIN}}
+{\footnotesize\ttfamily \label{config_8h_a56b64973bfd6514570671a2607122199} 
+\#define RESET\+\_\+\+BUTTON\+\_\+\+PIN~14}
+
+
+
+Pin tilsluttet reset-\/knappen. 
+
+\Hypertarget{config_8h_ab49943e2bd1d76424d992b99ed6b1838}\index{config.h@{config.h}!WIFI\_AP\_NAME@{WIFI\_AP\_NAME}}
+\index{WIFI\_AP\_NAME@{WIFI\_AP\_NAME}!config.h@{config.h}}
+\doxysubsubsection{\texorpdfstring{WIFI\_AP\_NAME}{WIFI\_AP\_NAME}}
+{\footnotesize\ttfamily \label{config_8h_ab49943e2bd1d76424d992b99ed6b1838} 
+\#define WIFI\+\_\+\+AP\+\_\+\+NAME~"{}ESP32-\/Logger"{}}
+
+
+
+Navn på Access Point (AP), hvis ESP32 ikke tidligere har været tilsluttet Wi\+Fi. 
+
+\Hypertarget{config_8h_ac80c92af8bf29cfe0442a28b6a7ec5a3}\index{config.h@{config.h}!WIFI\_AP\_PASSWORD@{WIFI\_AP\_PASSWORD}}
+\index{WIFI\_AP\_PASSWORD@{WIFI\_AP\_PASSWORD}!config.h@{config.h}}
+\doxysubsubsection{\texorpdfstring{WIFI\_AP\_PASSWORD}{WIFI\_AP\_PASSWORD}}
+{\footnotesize\ttfamily \label{config_8h_ac80c92af8bf29cfe0442a28b6a7ec5a3} 
+\#define WIFI\+\_\+\+AP\+\_\+\+PASSWORD~"{}admin123"{}}
+
+
+
+Adgangskode til Access Point (AP). 
+
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{config_8h_a60879f0ffc31ebcea6387a805d59a604}\index{config.h@{config.h}!buttonPressStart@{buttonPressStart}}
+\index{buttonPressStart@{buttonPressStart}!config.h@{config.h}}
+\doxysubsubsection{\texorpdfstring{buttonPressStart}{buttonPressStart}}
+{\footnotesize\ttfamily \label{config_8h_a60879f0ffc31ebcea6387a805d59a604} 
+unsigned long button\+Press\+Start\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Tidsstempel for hvornår reset-\/knappen blev trykket ned. 
+
+Tidsstempel for hvornår reset-\/knappen blev trykket ned. \Hypertarget{config_8h_a9aa67f3297f612883e61a753179f7848}\index{config.h@{config.h}!CSV\_HEADER@{CSV\_HEADER}}
+\index{CSV\_HEADER@{CSV\_HEADER}!config.h@{config.h}}
+\doxysubsubsection{\texorpdfstring{CSV\_HEADER}{CSV\_HEADER}}
+{\footnotesize\ttfamily \label{config_8h_a9aa67f3297f612883e61a753179f7848} 
+const char\texorpdfstring{$\ast$}{*} CSV\+\_\+\+HEADER = "{}Time,Temperature"{}\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+
+
+Header til CSV-\/filen. 
+
+\Hypertarget{config_8h_ad53c51e9c6ebec35c453a42ea91b9e13}\index{config.h@{config.h}!isReset@{isReset}}
+\index{isReset@{isReset}!config.h@{config.h}}
+\doxysubsubsection{\texorpdfstring{isReset}{isReset}}
+{\footnotesize\ttfamily \label{config_8h_ad53c51e9c6ebec35c453a42ea91b9e13} 
+bool is\+Reset\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Angiver om enheden er blevet nulstillet. 
+
+Angiver om enheden er blevet nulstillet. \Hypertarget{config_8h_a2b3be72791cfd8f5eed0c046307eece8}\index{config.h@{config.h}!oneWire@{oneWire}}
+\index{oneWire@{oneWire}!config.h@{config.h}}
+\doxysubsubsection{\texorpdfstring{oneWire}{oneWire}}
+{\footnotesize\ttfamily \label{config_8h_a2b3be72791cfd8f5eed0c046307eece8} 
+One\+Wire one\+Wire\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+One\+Wire-\/instans til kommunikation med sensorer. 
+
+One\+Wire-\/instans til kommunikation med sensorer. \Hypertarget{config_8h_a4866146b44160524b54141fa0a443e49}\index{config.h@{config.h}!resetInitiated@{resetInitiated}}
+\index{resetInitiated@{resetInitiated}!config.h@{config.h}}
+\doxysubsubsection{\texorpdfstring{resetInitiated}{resetInitiated}}
+{\footnotesize\ttfamily \label{config_8h_a4866146b44160524b54141fa0a443e49} 
+bool reset\+Initiated\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Angiver om reset-\/sekvensen er startet. 
+
+Angiver om reset-\/sekvensen er startet. \Hypertarget{config_8h_ac7833e6f3d8254559e6b9f6bd6e5f263}\index{config.h@{config.h}!sensors@{sensors}}
+\index{sensors@{sensors}!config.h@{config.h}}
+\doxysubsubsection{\texorpdfstring{sensors}{sensors}}
+{\footnotesize\ttfamily \label{config_8h_ac7833e6f3d8254559e6b9f6bd6e5f263} 
+Dallas\+Temperature sensors\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Dallas\+Temperature-\/instans til håndtering af temperaturmåling. 
+
+\Hypertarget{config_8h_a56916c67f21f332014c1c19b200d45f3}\index{config.h@{config.h}!server@{server}}
+\index{server@{server}!config.h@{config.h}}
+\doxysubsubsection{\texorpdfstring{server}{server}}
+{\footnotesize\ttfamily \label{config_8h_a56916c67f21f332014c1c19b200d45f3} 
+Async\+Web\+Server server\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Webserver-\/instans til håndtering af HTTP-\/forespørgsler. 
+
+\Hypertarget{config_8h_acbecb4e4203752ebd4b2d57ee6e376fd}\index{config.h@{config.h}!ws@{ws}}
+\index{ws@{ws}!config.h@{config.h}}
+\doxysubsubsection{\texorpdfstring{ws}{ws}}
+{\footnotesize\ttfamily \label{config_8h_acbecb4e4203752ebd4b2d57ee6e376fd} 
+Async\+Web\+Socket ws\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Web\+Socket-\/instans til realtidskommunikation med klienter. 
+

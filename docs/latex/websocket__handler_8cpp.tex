@@ -1,0 +1,41 @@
+\doxysection{src/websocket/websocket\+\_\+handler.cpp File Reference}
+\hypertarget{websocket__handler_8cpp}{}\label{websocket__handler_8cpp}\index{src/websocket/websocket\_handler.cpp@{src/websocket/websocket\_handler.cpp}}
+{\ttfamily \#include "{}websocket\+\_\+handler.\+h"{}}\newline
+{\ttfamily \#include $<$Arduino.\+h$>$}\newline
+Include dependency graph for websocket\+\_\+handler.\+cpp\+:
+% FIG 0
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{websocket__handler_8cpp_ad889d911a476382912d5e21b5bd29187}{on\+Web\+Socket\+Event}} (Async\+Web\+Socket \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{config_8h_a56916c67f21f332014c1c19b200d45f3}{server}}, Async\+Web\+Socket\+Client \texorpdfstring{$\ast$}{*}client, Aws\+Event\+Type type, void \texorpdfstring{$\ast$}{*}arg, uint8\+\_\+t \texorpdfstring{$\ast$}{*}data, size\+\_\+t len)
+\begin{DoxyCompactList}\small\item\em Web\+Socket event handler. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{websocket__handler_8cpp_ad889d911a476382912d5e21b5bd29187}\index{websocket\_handler.cpp@{websocket\_handler.cpp}!onWebSocketEvent@{onWebSocketEvent}}
+\index{onWebSocketEvent@{onWebSocketEvent}!websocket\_handler.cpp@{websocket\_handler.cpp}}
+\doxysubsubsection{\texorpdfstring{onWebSocketEvent()}{onWebSocketEvent()}}
+{\footnotesize\ttfamily \label{websocket__handler_8cpp_ad889d911a476382912d5e21b5bd29187} 
+void on\+Web\+Socket\+Event (\begin{DoxyParamCaption}\item[{Async\+Web\+Socket \texorpdfstring{$\ast$}{*}}]{server}{, }\item[{Async\+Web\+Socket\+Client \texorpdfstring{$\ast$}{*}}]{client}{, }\item[{Aws\+Event\+Type}]{type}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{arg}{, }\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{data}{, }\item[{size\+\_\+t}]{len}{}\end{DoxyParamCaption})}
+
+
+
+Web\+Socket event handler. 
+
+Denne funktion håndterer hændelser fra Web\+Socket-\/serveren såsom forbindelse, afbrydelse og data.
+
+
+\begin{DoxyParams}{Parameters}
+{\em server} & Pointer til den asynkrone Web\+Socket-\/server. \\
+\hline
+{\em client} & Pointer til den klient, der genererede hændelsen. \\
+\hline
+{\em type} & Typen af Web\+Socket-\/hændelse (forbindelse, afbrydelse, data, m.\+m.). \\
+\hline
+{\em arg} & Ekstra argumenter (bruges normalt ikke). \\
+\hline
+{\em data} & Pointer til data (kun relevant ved WS\+\_\+\+EVT\+\_\+\+DATA). \\
+\hline
+{\em len} & Længden af dataen. \\
+\hline
+\end{DoxyParams}

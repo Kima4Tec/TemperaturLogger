@@ -1,0 +1,37 @@
+\doxysection{src/csv/csv\+\_\+handler.cpp File Reference}
+\hypertarget{csv__handler_8cpp}{}\label{csv__handler_8cpp}\index{src/csv/csv\_handler.cpp@{src/csv/csv\_handler.cpp}}
+{\ttfamily \#include $<$SPIFFS.\+h$>$}\newline
+{\ttfamily \#include "{}csv\+\_\+handler.\+h"{}}\newline
+Include dependency graph for csv\+\_\+handler.\+cpp\+:
+% FIG 0
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{csv__handler_8cpp_ab3ee809f3af491f7e72d835c57571c58}{append\+To\+CSV}} (const char \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{main_8cpp_a7efa5e9c7494c7d4586359300221aa5d}{filename}}, const char \texorpdfstring{$\ast$}{*}time, float temperature)
+\begin{DoxyCompactList}\small\item\em Tilføjer ny temperaturmåling til CSV-\/fil. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{csv__handler_8cpp_ab3ee809f3af491f7e72d835c57571c58}\index{csv\_handler.cpp@{csv\_handler.cpp}!appendToCSV@{appendToCSV}}
+\index{appendToCSV@{appendToCSV}!csv\_handler.cpp@{csv\_handler.cpp}}
+\doxysubsubsection{\texorpdfstring{appendToCSV()}{appendToCSV()}}
+{\footnotesize\ttfamily \label{csv__handler_8cpp_ab3ee809f3af491f7e72d835c57571c58} 
+void append\+To\+CSV (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{filename}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{time}{, }\item[{float}]{temperature}{}\end{DoxyParamCaption})}
+
+
+
+Tilføjer ny temperaturmåling til CSV-\/fil. 
+
+Tilføjer en ny linje med tidsstempel og temperatur til en CSV-\/fil.
+
+Funktionen tjekker, om CSV-\/filen allerede eksisterer. Hvis ikke, tilføjes en header\+: "{}\+Time,\+Temperature"{}. Målingen tilføjes derefter i formatet\+: tid,temperatur
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & Sti til filen \\
+\hline
+{\em time} & Tidsstempel som tekst \\
+\hline
+{\em temperature} & Målt temperatur \\
+\hline
+\end{DoxyParams}

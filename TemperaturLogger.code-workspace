@@ -1,9 +1,6 @@
 {
 	"folders": [
 		{
-			"path": "../OledBtnLed"
-		},
-		{
 			"name": "TemperaturLogger",
 			"path": "."
 		}

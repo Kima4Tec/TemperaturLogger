@@ -10,11 +10,14 @@
 |  |--papaparse.min.js
 |  |--service.html
 |  |--style.css
+|
+|--docs --> doxyfiles
+|  |--html
+|  |--latex
 |  
 |--lib
 |  |--flowchart.md --> kræver mermaid extension for at se
 |  |--README --> Denne fil
-|  |--TemperaturLogger --> Doxygen konfiguration
 |  |--TemperaturLogger Projektbeskrivelse.docx
 |  |--TemperaturLogger_bb.png --> Fritzing breadboard image
 |  |--TemperaturLogger.docx --> Brugervejledning
@@ -44,4 +47,5 @@
 |     |--wifi_handler.h
 |  |- config.h
 |  |- main.cpp
+|--Doxyfile --> Doxygen konfiguration
 

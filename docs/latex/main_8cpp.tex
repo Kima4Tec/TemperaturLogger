@@ -1,0 +1,210 @@
+\doxysection{src/main.cpp File Reference}
+\hypertarget{main_8cpp}{}\label{main_8cpp}\index{src/main.cpp@{src/main.cpp}}
+
+
+Hovedfil til ESP32 temperaturlogger med Web\+Socket, SPIFFS og Wi\+Fi\+Manager.  
+
+
+{\ttfamily \#include $<$Wi\+Fi.\+h$>$}\newline
+{\ttfamily \#include $<$One\+Wire.\+h$>$}\newline
+{\ttfamily \#include $<$Dallas\+Temperature.\+h$>$}\newline
+{\ttfamily \#include $<$Wi\+Fi\+Manager.\+h$>$}\newline
+{\ttfamily \#include $<$SPIFFS.\+h$>$}\newline
+{\ttfamily \#include $<$ESPAsync\+Web\+Server.\+h$>$}\newline
+{\ttfamily \#include $<$Async\+TCP.\+h$>$}\newline
+{\ttfamily \#include "{}Arduino.\+h"{}}\newline
+{\ttfamily \#include "{}config.\+h"{}}\newline
+{\ttfamily \#include "{}csv/csv\+\_\+handler.\+h"{}}\newline
+{\ttfamily \#include "{}wifi/wifi\+\_\+handler.\+h"{}}\newline
+{\ttfamily \#include "{}time/time\+\_\+handler.\+h"{}}\newline
+{\ttfamily \#include "{}reset/reset\+\_\+handler.\+h"{}}\newline
+{\ttfamily \#include "{}route/route\+\_\+handler.\+h"{}}\newline
+{\ttfamily \#include "{}sensor/sensor\+\_\+handler.\+h"{}}\newline
+{\ttfamily \#include "{}websocket/websocket\+\_\+handler.\+h"{}}\newline
+Include dependency graph for main.\+cpp\+:
+% FIG 0
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+One\+Wire \mbox{\hyperlink{main_8cpp_a8a1d00f74fee641b711f7f00b8053c1a}{one\+Wire}} (\mbox{\hyperlink{config_8h_a4260ed8874da804fb9ef9abba200b487}{ONE\+\_\+\+WIRE\+\_\+\+BUS}})
+\begin{DoxyCompactList}\small\item\em \texorpdfstring{$<$}{<} TCP-\/support til async-\/server \end{DoxyCompactList}\item 
+Async\+Web\+Server \mbox{\hyperlink{main_8cpp_a85f30d66aa1231313c8553fd485b22b1}{server}} (80)
+\begin{DoxyCompactList}\small\item\em Asynkron webserver på port 80. \end{DoxyCompactList}\item 
+Async\+Web\+Socket \mbox{\hyperlink{main_8cpp_a12b97dd15b0118cb30b85286f7c4b3c9}{ws}} ("{}/ws"{})
+\begin{DoxyCompactList}\small\item\em Web\+Socket objekt på endpoint "{}/ws"{}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8cpp_a4fc01d736fe50cf5b977f755b675f11d}{setup}} ()
+\begin{DoxyCompactList}\small\item\em Initialiserer systemet, Wi\+Fi, SPIFFS, sensorer og Web\+Socket. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8cpp_afe461d27b9c48d5921c00d521181f12f}{loop}} ()
+\begin{DoxyCompactList}\small\item\em Loop\+: logger temperatur samt håndterer Wi\+Fi og reset-\/knap. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+Dallas\+Temperature \mbox{\hyperlink{config_8h_ac7833e6f3d8254559e6b9f6bd6e5f263}{sensors}} \& \mbox{\hyperlink{main_8cpp_a18aa2e713b723d14e68fe9df63be78a3}{one\+Wire}}
+\begin{DoxyCompactList}\small\item\em Temperatur-\/sensor. \end{DoxyCompactList}\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{main_8cpp_a7efa5e9c7494c7d4586359300221aa5d}{filename}} = \mbox{\hyperlink{config_8h_a541689b4b95fb5d3c4b6d1d9c23b1b3e}{DATA\+\_\+\+FILENAME}}
+\begin{DoxyCompactList}\small\item\em Filnavn til CSV-\/log. \end{DoxyCompactList}\item 
+unsigned long \mbox{\hyperlink{main_8cpp_a86027ad9c9159f02624d136fb63364fe}{previous\+Millis}} = 0
+\begin{DoxyCompactList}\small\item\em Tid siden sidste Wi\+Fi-\/reconnect. \end{DoxyCompactList}\item 
+unsigned long \mbox{\hyperlink{main_8cpp_aaaceac04637cd33a7f3fffdd1711e6c5}{interval}} = 30000
+\begin{DoxyCompactList}\small\item\em Interval mellem Wi\+Fi-\/reconnects (ms) \end{DoxyCompactList}\item 
+unsigned long \mbox{\hyperlink{main_8cpp_a60879f0ffc31ebcea6387a805d59a604}{button\+Press\+Start}} = 0
+\begin{DoxyCompactList}\small\item\em Starttidspunkt for reset-\/knap. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{main_8cpp_a4866146b44160524b54141fa0a443e49}{reset\+Initiated}} = false
+\begin{DoxyCompactList}\small\item\em Bool for igangværende reset. \end{DoxyCompactList}\item 
+char \mbox{\hyperlink{main_8cpp_a6b56dd590f8d19add3d920bb310e5934}{time\+String}} \mbox{[}64\mbox{]}
+\begin{DoxyCompactList}\small\item\em Formatér tid som tekst. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{main_8cpp_ad53c51e9c6ebec35c453a42ea91b9e13}{is\+Reset}} = false
+\begin{DoxyCompactList}\small\item\em Bool for reset-\/status. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Hovedfil til ESP32 temperaturlogger med Web\+Socket, SPIFFS og Wi\+Fi\+Manager. 
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{main_8cpp_afe461d27b9c48d5921c00d521181f12f}\index{main.cpp@{main.cpp}!loop@{loop}}
+\index{loop@{loop}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{loop()}{loop()}}
+{\footnotesize\ttfamily \label{main_8cpp_afe461d27b9c48d5921c00d521181f12f} 
+void loop (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Loop\+: logger temperatur samt håndterer Wi\+Fi og reset-\/knap. 
+
+Checker om reset-\/knappen er blevet trykket ned
+
+\texorpdfstring{$<$}{<} Logger temperatur og sender til klienter\Hypertarget{main_8cpp_a8a1d00f74fee641b711f7f00b8053c1a}\index{main.cpp@{main.cpp}!oneWire@{oneWire}}
+\index{oneWire@{oneWire}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{oneWire()}{oneWire()}}
+{\footnotesize\ttfamily \label{main_8cpp_a8a1d00f74fee641b711f7f00b8053c1a} 
+One\+Wire one\+Wire (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{config_8h_a4260ed8874da804fb9ef9abba200b487}{ONE\+\_\+\+WIRE\+\_\+\+BUS}}}]{}{}\end{DoxyParamCaption})}
+
+
+
+\texorpdfstring{$<$}{<} TCP-\/support til async-\/server 
+
+\texorpdfstring{$<$}{<} Wi\+Fi-\/funktioner for ESP32 \texorpdfstring{$<$}{<} Bibliotek til at kommunikere med DS18\+B20 \texorpdfstring{$<$}{<} Bibliotek til temperaturdata fra DS18\+B20-\/sensor \texorpdfstring{$<$}{<} Wi\+Fi-\/konfiguration og portal \texorpdfstring{$<$}{<} SPI Flash File System til filhåndtering \texorpdfstring{$<$}{<} Asynkron webserver og Web\+Socket-\/support One\+Wire-\/bus til DS18\+B20 \Hypertarget{main_8cpp_a85f30d66aa1231313c8553fd485b22b1}\index{main.cpp@{main.cpp}!server@{server}}
+\index{server@{server}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{server()}{server()}}
+{\footnotesize\ttfamily \label{main_8cpp_a85f30d66aa1231313c8553fd485b22b1} 
+Async\+Web\+Server server (\begin{DoxyParamCaption}\item[{80}]{}{}\end{DoxyParamCaption})}
+
+
+
+Asynkron webserver på port 80. 
+
+\Hypertarget{main_8cpp_a4fc01d736fe50cf5b977f755b675f11d}\index{main.cpp@{main.cpp}!setup@{setup}}
+\index{setup@{setup}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{setup()}{setup()}}
+{\footnotesize\ttfamily \label{main_8cpp_a4fc01d736fe50cf5b977f755b675f11d} 
+void setup (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Initialiserer systemet, Wi\+Fi, SPIFFS, sensorer og Web\+Socket. 
+
+\texorpdfstring{$<$}{<} Hent og formatér tid
+
+\texorpdfstring{$<$}{<} Log temperatur til CSV
+
+\texorpdfstring{$<$}{<} Initialiser webserver routes
+
+\texorpdfstring{$<$}{<} Web\+Socket event-\/handler
+
+\texorpdfstring{$<$}{<} Tilføj Web\+Socket til server
+
+\texorpdfstring{$<$}{<} Start webserver\Hypertarget{main_8cpp_a12b97dd15b0118cb30b85286f7c4b3c9}\index{main.cpp@{main.cpp}!ws@{ws}}
+\index{ws@{ws}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{ws()}{ws()}}
+{\footnotesize\ttfamily \label{main_8cpp_a12b97dd15b0118cb30b85286f7c4b3c9} 
+Async\+Web\+Socket ws (\begin{DoxyParamCaption}\item[{"{}/ws"{}}]{}{}\end{DoxyParamCaption})}
+
+
+
+Web\+Socket objekt på endpoint "{}/ws"{}. 
+
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{main_8cpp_a60879f0ffc31ebcea6387a805d59a604}\index{main.cpp@{main.cpp}!buttonPressStart@{buttonPressStart}}
+\index{buttonPressStart@{buttonPressStart}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{buttonPressStart}{buttonPressStart}}
+{\footnotesize\ttfamily \label{main_8cpp_a60879f0ffc31ebcea6387a805d59a604} 
+unsigned long button\+Press\+Start = 0}
+
+
+
+Starttidspunkt for reset-\/knap. 
+
+Tidsstempel for hvornår reset-\/knappen blev trykket ned. \Hypertarget{main_8cpp_a7efa5e9c7494c7d4586359300221aa5d}\index{main.cpp@{main.cpp}!filename@{filename}}
+\index{filename@{filename}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{filename}{filename}}
+{\footnotesize\ttfamily \label{main_8cpp_a7efa5e9c7494c7d4586359300221aa5d} 
+const char\texorpdfstring{$\ast$}{*} filename = \mbox{\hyperlink{config_8h_a541689b4b95fb5d3c4b6d1d9c23b1b3e}{DATA\+\_\+\+FILENAME}}}
+
+
+
+Filnavn til CSV-\/log. 
+
+Indeholder funktioner til at hente og logge temperaturdata samt sende dem via Web\+Socket. \Hypertarget{main_8cpp_aaaceac04637cd33a7f3fffdd1711e6c5}\index{main.cpp@{main.cpp}!interval@{interval}}
+\index{interval@{interval}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{interval}{interval}}
+{\footnotesize\ttfamily \label{main_8cpp_aaaceac04637cd33a7f3fffdd1711e6c5} 
+unsigned long interval = 30000}
+
+
+
+Interval mellem Wi\+Fi-\/reconnects (ms) 
+
+\Hypertarget{main_8cpp_ad53c51e9c6ebec35c453a42ea91b9e13}\index{main.cpp@{main.cpp}!isReset@{isReset}}
+\index{isReset@{isReset}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{isReset}{isReset}}
+{\footnotesize\ttfamily \label{main_8cpp_ad53c51e9c6ebec35c453a42ea91b9e13} 
+bool is\+Reset = false}
+
+
+
+Bool for reset-\/status. 
+
+Angiver om enheden er blevet nulstillet. \Hypertarget{main_8cpp_a18aa2e713b723d14e68fe9df63be78a3}\index{main.cpp@{main.cpp}!oneWire@{oneWire}}
+\index{oneWire@{oneWire}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{oneWire}{oneWire}}
+{\footnotesize\ttfamily \label{main_8cpp_a18aa2e713b723d14e68fe9df63be78a3} 
+Dallas\+Temperature \mbox{\hyperlink{config_8h_ac7833e6f3d8254559e6b9f6bd6e5f263}{sensors}}\& one\+Wire}
+
+
+
+Temperatur-\/sensor. 
+
+One\+Wire-\/instans til kommunikation med sensorer. \Hypertarget{main_8cpp_a86027ad9c9159f02624d136fb63364fe}\index{main.cpp@{main.cpp}!previousMillis@{previousMillis}}
+\index{previousMillis@{previousMillis}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{previousMillis}{previousMillis}}
+{\footnotesize\ttfamily \label{main_8cpp_a86027ad9c9159f02624d136fb63364fe} 
+unsigned long previous\+Millis = 0}
+
+
+
+Tid siden sidste Wi\+Fi-\/reconnect. 
+
+\Hypertarget{main_8cpp_a4866146b44160524b54141fa0a443e49}\index{main.cpp@{main.cpp}!resetInitiated@{resetInitiated}}
+\index{resetInitiated@{resetInitiated}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{resetInitiated}{resetInitiated}}
+{\footnotesize\ttfamily \label{main_8cpp_a4866146b44160524b54141fa0a443e49} 
+bool reset\+Initiated = false}
+
+
+
+Bool for igangværende reset. 
+
+Angiver om reset-\/sekvensen er startet. \Hypertarget{main_8cpp_a6b56dd590f8d19add3d920bb310e5934}\index{main.cpp@{main.cpp}!timeString@{timeString}}
+\index{timeString@{timeString}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{timeString}{timeString}}
+{\footnotesize\ttfamily \label{main_8cpp_a6b56dd590f8d19add3d920bb310e5934} 
+char time\+String\mbox{[}64\mbox{]}}
+
+
+
+Formatér tid som tekst. 
+

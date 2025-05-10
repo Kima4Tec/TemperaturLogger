@@ -1,0 +1,84 @@
+\doxysection{src/sensor/sensor\+\_\+handler.h File Reference}
+\hypertarget{sensor__handler_8h}{}\label{sensor__handler_8h}\index{src/sensor/sensor\_handler.h@{src/sensor/sensor\_handler.h}}
+{\ttfamily \#include $<$Dallas\+Temperature.\+h$>$}\newline
+{\ttfamily \#include $<$One\+Wire.\+h$>$}\newline
+{\ttfamily \#include "{}config.\+h"{}}\newline
+Include dependency graph for sensor\+\_\+handler.\+h\+:
+% FIG 0
+This graph shows which files directly or indirectly include this file\+:
+% FIG 1
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{sensor__handler_8h_ad48f188855a28e8226ea9d793ebd0264}{get\+Formatted\+Time}} (char \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{main_8cpp_a6b56dd590f8d19add3d920bb310e5934}{time\+String}})
+\begin{DoxyCompactList}\small\item\em Henter den aktuelle lokale tid som en formateret streng. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{sensor__handler_8h_a1829ab22d39dfc0b09544b4f1ad1ea02}{log\+Temperature\+To\+CSV}} (Dallas\+Temperature \&\mbox{\hyperlink{config_8h_ac7833e6f3d8254559e6b9f6bd6e5f263}{sensors}}, char \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{main_8cpp_a6b56dd590f8d19add3d920bb310e5934}{time\+String}})
+\begin{DoxyCompactList}\small\item\em Logger den aktuelle temperatur til en CSV-\/fil. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{sensor__handler_8h_a7cb54685ddb3c45facf6daadcc4a5f4b}{print\+Log}} ()
+\begin{DoxyCompactList}\small\item\em Udskriver indholdet af CSV-\/logfilen til Serial Monitor. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{sensor__handler_8h_ad48f188855a28e8226ea9d793ebd0264}\index{sensor\_handler.h@{sensor\_handler.h}!getFormattedTime@{getFormattedTime}}
+\index{getFormattedTime@{getFormattedTime}!sensor\_handler.h@{sensor\_handler.h}}
+\doxysubsubsection{\texorpdfstring{getFormattedTime()}{getFormattedTime()}}
+{\footnotesize\ttfamily \label{sensor__handler_8h_ad48f188855a28e8226ea9d793ebd0264} 
+void get\+Formatted\+Time (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{time\+String}{}\end{DoxyParamCaption})}
+
+
+
+Henter den aktuelle lokale tid som en formateret streng. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em time\+String} & Peger på en buffer (mindst 20 tegn), hvor det formatterede tidspunkt gemmes.\\
+\hline
+\end{DoxyParams}
+Henter den aktuelle lokale tid som en formateret streng.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em time\+String} & En buffer hvor den formaterede tid (YYYY-\/\+MM-\/\+DD HH\+:\+MM\+:SS) gemmes.\\
+\hline
+\end{DoxyParams}
+Funktionen venter indtil, der er en gyldig tid via NTP og formaterer den til en læsbar streng. \Hypertarget{sensor__handler_8h_a1829ab22d39dfc0b09544b4f1ad1ea02}\index{sensor\_handler.h@{sensor\_handler.h}!logTemperatureToCSV@{logTemperatureToCSV}}
+\index{logTemperatureToCSV@{logTemperatureToCSV}!sensor\_handler.h@{sensor\_handler.h}}
+\doxysubsubsection{\texorpdfstring{logTemperatureToCSV()}{logTemperatureToCSV()}}
+{\footnotesize\ttfamily \label{sensor__handler_8h_a1829ab22d39dfc0b09544b4f1ad1ea02} 
+void log\+Temperature\+To\+CSV (\begin{DoxyParamCaption}\item[{Dallas\+Temperature \&}]{sensors}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{time\+String}{}\end{DoxyParamCaption})}
+
+
+
+Logger den aktuelle temperatur til en CSV-\/fil. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sensors} & Reference til Dallas\+Temperature-\/objektet, der håndterer temperatursensoren. \\
+\hline
+{\em time\+String} & Den aktuelle tid som formateret streng.\\
+\hline
+\end{DoxyParams}
+Logger den aktuelle temperatur til en CSV-\/fil.
+
+
+\begin{DoxyParams}{Parameters}
+{\em sensors} & En reference til Dallas\+Temperature-\/sensorobjektet. \\
+\hline
+{\em time\+String} & En streng med den aktuelle tid.\\
+\hline
+\end{DoxyParams}
+Funktionen venter på en gyldig temperaturmåling (-\/127.\+0 viser manglende forbindelse) og logger derefter både tid og temperatur til fil. Temperaturen fra sensor læses og der tilføjes en ny linje med tid og temperatur til CSV-\/filen. \Hypertarget{sensor__handler_8h_a7cb54685ddb3c45facf6daadcc4a5f4b}\index{sensor\_handler.h@{sensor\_handler.h}!printLog@{printLog}}
+\index{printLog@{printLog}!sensor\_handler.h@{sensor\_handler.h}}
+\doxysubsubsection{\texorpdfstring{printLog()}{printLog()}}
+{\footnotesize\ttfamily \label{sensor__handler_8h_a7cb54685ddb3c45facf6daadcc4a5f4b} 
+void print\+Log (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Udskriver indholdet af CSV-\/logfilen til Serial Monitor. 
+
+Bruges til fejlsøgning og kontrol af de loggede data.
+
+Udskriver indholdet af CSV-\/logfilen til Serial Monitor.
+
+Funktionen henter det aktuelle tidspunkt og temperatur, skriver dem til Serial og CSV, og sender temperaturværdien som JSON til alle tilsluttede Web\+Socket-\/klienter. 
