@@ -1,13 +1,13 @@
-\doxysection{src/sensor/sensor\+\_\+handler.h File Reference}
+\doxysection{src/sensor/sensor\+\_\+handler.h filreference}
 \hypertarget{sensor__handler_8h}{}\label{sensor__handler_8h}\index{src/sensor/sensor\_handler.h@{src/sensor/sensor\_handler.h}}
 {\ttfamily \#include $<$Dallas\+Temperature.\+h$>$}\newline
 {\ttfamily \#include $<$One\+Wire.\+h$>$}\newline
 {\ttfamily \#include "{}config.\+h"{}}\newline
-Include dependency graph for sensor\+\_\+handler.\+h\+:
+Inklusions-\/afhængighedsgraf for sensor\+\_\+handler.\+h\+:
 % FIG 0
-This graph shows which files directly or indirectly include this file\+:
+Denne graf viser, hvilke filer der direkte eller indirekte inkluderer denne fil\+:
 % FIG 1
-\doxysubsubsection*{Functions}
+\doxysubsubsection*{Funktioner}
 \begin{DoxyCompactItemize}
 \item 
 void \mbox{\hyperlink{sensor__handler_8h_ad48f188855a28e8226ea9d793ebd0264}{get\+Formatted\+Time}} (char \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{main_8cpp_a6b56dd590f8d19add3d920bb310e5934}{time\+String}})
@@ -18,7 +18,7 @@ void \mbox{\hyperlink{sensor__handler_8h_a7cb54685ddb3c45facf6daadcc4a5f4b}{prin
 \begin{DoxyCompactList}\small\item\em Udskriver indholdet af CSV-\/logfilen til Serial Monitor. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
-\doxysubsection{Function Documentation}
+\doxysubsection{Funktions-\/dokumentation}
 \Hypertarget{sensor__handler_8h_ad48f188855a28e8226ea9d793ebd0264}\index{sensor\_handler.h@{sensor\_handler.h}!getFormattedTime@{getFormattedTime}}
 \index{getFormattedTime@{getFormattedTime}!sensor\_handler.h@{sensor\_handler.h}}
 \doxysubsubsection{\texorpdfstring{getFormattedTime()}{getFormattedTime()}}
@@ -30,14 +30,14 @@ void get\+Formatted\+Time (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$
 Henter den aktuelle lokale tid som en formateret streng. 
 
 
-\begin{DoxyParams}{Parameters}
+\begin{DoxyParams}{Parametre}
 {\em time\+String} & Peger på en buffer (mindst 20 tegn), hvor det formatterede tidspunkt gemmes.\\
 \hline
 \end{DoxyParams}
 Henter den aktuelle lokale tid som en formateret streng.
 
 
-\begin{DoxyParams}[1]{Parameters}
+\begin{DoxyParams}[1]{Parametre}
 \mbox{\texttt{ out}}  & {\em time\+String} & En buffer hvor den formaterede tid (YYYY-\/\+MM-\/\+DD HH\+:\+MM\+:SS) gemmes.\\
 \hline
 \end{DoxyParams}
@@ -52,7 +52,7 @@ void log\+Temperature\+To\+CSV (\begin{DoxyParamCaption}\item[{Dallas\+Temperatu
 Logger den aktuelle temperatur til en CSV-\/fil. 
 
 
-\begin{DoxyParams}{Parameters}
+\begin{DoxyParams}{Parametre}
 {\em sensors} & Reference til Dallas\+Temperature-\/objektet, der håndterer temperatursensoren. \\
 \hline
 {\em time\+String} & Den aktuelle tid som formateret streng.\\
@@ -61,7 +61,7 @@ Logger den aktuelle temperatur til en CSV-\/fil.
 Logger den aktuelle temperatur til en CSV-\/fil.
 
 
-\begin{DoxyParams}{Parameters}
+\begin{DoxyParams}{Parametre}
 {\em sensors} & En reference til Dallas\+Temperature-\/sensorobjektet. \\
 \hline
 {\em time\+String} & En streng med den aktuelle tid.\\

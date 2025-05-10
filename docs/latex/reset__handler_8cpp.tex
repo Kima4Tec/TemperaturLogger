@@ -1,18 +1,18 @@
-\doxysection{src/reset/reset\+\_\+handler.cpp File Reference}
+\doxysection{src/reset/reset\+\_\+handler.cpp filreference}
 \hypertarget{reset__handler_8cpp}{}\label{reset__handler_8cpp}\index{src/reset/reset\_handler.cpp@{src/reset/reset\_handler.cpp}}
 {\ttfamily \#include $<$Wi\+Fi.\+h$>$}\newline
 {\ttfamily \#include $<$Wi\+Fi\+Manager.\+h$>$}\newline
 {\ttfamily \#include "{}reset\+\_\+handler.\+h"{}}\newline
-Include dependency graph for reset\+\_\+handler.\+cpp\+:
+Inklusions-\/afhængighedsgraf for reset\+\_\+handler.\+cpp\+:
 % FIG 0
-\doxysubsubsection*{Functions}
+\doxysubsubsection*{Funktioner}
 \begin{DoxyCompactItemize}
 \item 
 void \mbox{\hyperlink{reset__handler_8cpp_a13ed63b0e1fce0ac4c52c13bee25da54}{check\+Reset\+Button}} ()
 \begin{DoxyCompactList}\small\item\em Tjekker om reset-\/knappen holdes nede i mindst 10 sekunder og udfører så reset. Når knappen holdes nede (LOW-\/niveau på RESET\+\_\+\+BUTTON\+\_\+\+PIN) i mindst 10 sekunder, nulstilles Wi\+Fi-\/indstillinger via Wi\+Fi\+Manager og ESP32 genstartes. is\+Reset sørger for at der kun resettes en gang. Hvis knappen slippes før tiden er gået, annulleres reset-\/processen. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
-\doxysubsection{Function Documentation}
+\doxysubsection{Funktions-\/dokumentation}
 \Hypertarget{reset__handler_8cpp_a13ed63b0e1fce0ac4c52c13bee25da54}\index{reset\_handler.cpp@{reset\_handler.cpp}!checkResetButton@{checkResetButton}}
 \index{checkResetButton@{checkResetButton}!reset\_handler.cpp@{reset\_handler.cpp}}
 \doxysubsubsection{\texorpdfstring{checkResetButton()}{checkResetButton()}}

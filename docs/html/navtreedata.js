@@ -25,13 +25,13 @@
 var NAVTREE =
 [
   [ "TemperaturLogger", "index.html", [
-    [ "Files", "files.html", [
-      [ "File List", "files.html", "files_dup" ],
-      [ "File Members", "globals.html", [
-        [ "All", "globals.html", null ],
-        [ "Functions", "globals_func.html", null ],
-        [ "Variables", "globals_vars.html", null ],
-        [ "Macros", "globals_defs.html", null ]
+    [ "Filer", "files.html", [
+      [ "Filoversigt", "files.html", "files_dup" ],
+      [ "Placering i filer", "globals.html", [
+        [ "Alle", "globals.html", null ],
+        [ "Funktioner", "globals_func.html", null ],
+        [ "Variable", "globals_vars.html", null ],
+        [ "#Defines", "globals_defs.html", null ]
       ] ]
     ] ]
   ] ]

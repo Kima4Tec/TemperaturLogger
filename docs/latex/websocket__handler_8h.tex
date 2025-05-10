@@ -1,19 +1,19 @@
-\doxysection{src/websocket/websocket\+\_\+handler.h File Reference}
+\doxysection{src/websocket/websocket\+\_\+handler.h filreference}
 \hypertarget{websocket__handler_8h}{}\label{websocket__handler_8h}\index{src/websocket/websocket\_handler.h@{src/websocket/websocket\_handler.h}}
 {\ttfamily \#include $<$ESPAsync\+Web\+Server.\+h$>$}\newline
 {\ttfamily \#include $<$Async\+TCP.\+h$>$}\newline
-Include dependency graph for websocket\+\_\+handler.\+h\+:
+Inklusions-\/afhængighedsgraf for websocket\+\_\+handler.\+h\+:
 % FIG 0
-This graph shows which files directly or indirectly include this file\+:
+Denne graf viser, hvilke filer der direkte eller indirekte inkluderer denne fil\+:
 % FIG 1
-\doxysubsubsection*{Functions}
+\doxysubsubsection*{Funktioner}
 \begin{DoxyCompactItemize}
 \item 
 void \mbox{\hyperlink{websocket__handler_8h_ad889d911a476382912d5e21b5bd29187}{on\+Web\+Socket\+Event}} (Async\+Web\+Socket \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{config_8h_a56916c67f21f332014c1c19b200d45f3}{server}}, Async\+Web\+Socket\+Client \texorpdfstring{$\ast$}{*}client, Aws\+Event\+Type type, void \texorpdfstring{$\ast$}{*}arg, uint8\+\_\+t \texorpdfstring{$\ast$}{*}data, size\+\_\+t len)
 \begin{DoxyCompactList}\small\item\em Web\+Socket event handler. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
-\doxysubsection{Function Documentation}
+\doxysubsection{Funktions-\/dokumentation}
 \Hypertarget{websocket__handler_8h_ad889d911a476382912d5e21b5bd29187}\index{websocket\_handler.h@{websocket\_handler.h}!onWebSocketEvent@{onWebSocketEvent}}
 \index{onWebSocketEvent@{onWebSocketEvent}!websocket\_handler.h@{websocket\_handler.h}}
 \doxysubsubsection{\texorpdfstring{onWebSocketEvent()}{onWebSocketEvent()}}
@@ -27,7 +27,7 @@ Web\+Socket event handler.
 Denne funktion håndterer Web\+Socket-\/hændelser for ESPAsync\+Web\+Server, inkl. tilslutning, afbrydelse og indkommende data.
 
 
-\begin{DoxyParams}{Parameters}
+\begin{DoxyParams}{Parametre}
 {\em server} & Pointer til Web\+Socket-\/serveren. \\
 \hline
 {\em client} & Pointer til den Web\+Socket-\/klient, der genererede hændelsen. \\
@@ -44,7 +44,7 @@ Denne funktion håndterer Web\+Socket-\/hændelser for ESPAsync\+Web\+Server, in
 Denne funktion håndterer hændelser fra Web\+Socket-\/serveren såsom forbindelse, afbrydelse og data.
 
 
-\begin{DoxyParams}{Parameters}
+\begin{DoxyParams}{Parametre}
 {\em server} & Pointer til den asynkrone Web\+Socket-\/server. \\
 \hline
 {\em client} & Pointer til den klient, der genererede hændelsen. \\

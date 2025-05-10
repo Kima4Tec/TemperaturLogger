@@ -1,4 +1,4 @@
-\doxysection{src/main.cpp File Reference}
+\doxysection{src/main.cpp filreference}
 \hypertarget{main_8cpp}{}\label{main_8cpp}\index{src/main.cpp@{src/main.cpp}}
 
 
@@ -21,9 +21,9 @@ Hovedfil til ESP32 temperaturlogger med Web\+Socket, SPIFFS og Wi\+Fi\+Manager.
 {\ttfamily \#include "{}route/route\+\_\+handler.\+h"{}}\newline
 {\ttfamily \#include "{}sensor/sensor\+\_\+handler.\+h"{}}\newline
 {\ttfamily \#include "{}websocket/websocket\+\_\+handler.\+h"{}}\newline
-Include dependency graph for main.\+cpp\+:
+Inklusions-\/afhængighedsgraf for main.\+cpp\+:
 % FIG 0
-\doxysubsubsection*{Functions}
+\doxysubsubsection*{Funktioner}
 \begin{DoxyCompactItemize}
 \item 
 One\+Wire \mbox{\hyperlink{main_8cpp_a8a1d00f74fee641b711f7f00b8053c1a}{one\+Wire}} (\mbox{\hyperlink{config_8h_a4260ed8874da804fb9ef9abba200b487}{ONE\+\_\+\+WIRE\+\_\+\+BUS}})
@@ -36,7 +36,7 @@ void \mbox{\hyperlink{main_8cpp_a4fc01d736fe50cf5b977f755b675f11d}{setup}} ()
 \begin{DoxyCompactList}\small\item\em Initialiserer systemet, Wi\+Fi, SPIFFS, sensorer og Web\+Socket. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{main_8cpp_afe461d27b9c48d5921c00d521181f12f}{loop}} ()
 \begin{DoxyCompactList}\small\item\em Loop\+: logger temperatur samt håndterer Wi\+Fi og reset-\/knap. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\doxysubsubsection*{Variables}
+\doxysubsubsection*{Variable}
 \begin{DoxyCompactItemize}
 \item 
 Dallas\+Temperature \mbox{\hyperlink{config_8h_ac7833e6f3d8254559e6b9f6bd6e5f263}{sensors}} \& \mbox{\hyperlink{main_8cpp_a18aa2e713b723d14e68fe9df63be78a3}{one\+Wire}}
@@ -57,12 +57,12 @@ bool \mbox{\hyperlink{main_8cpp_ad53c51e9c6ebec35c453a42ea91b9e13}{is\+Reset}} =
 \begin{DoxyCompactList}\small\item\em Bool for reset-\/status. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
-\doxysubsection{Detailed Description}
+\doxysubsection{Detaljeret beskrivelse}
 Hovedfil til ESP32 temperaturlogger med Web\+Socket, SPIFFS og Wi\+Fi\+Manager. 
 
 
 
-\doxysubsection{Function Documentation}
+\doxysubsection{Funktions-\/dokumentation}
 \Hypertarget{main_8cpp_afe461d27b9c48d5921c00d521181f12f}\index{main.cpp@{main.cpp}!loop@{loop}}
 \index{loop@{loop}!main.cpp@{main.cpp}}
 \doxysubsubsection{\texorpdfstring{loop()}{loop()}}
@@ -127,7 +127,7 @@ Web\+Socket objekt på endpoint "{}/ws"{}.
 
 
 
-\doxysubsection{Variable Documentation}
+\doxysubsection{Variabel-\/dokumentation}
 \Hypertarget{main_8cpp_a60879f0ffc31ebcea6387a805d59a604}\index{main.cpp@{main.cpp}!buttonPressStart@{buttonPressStart}}
 \index{buttonPressStart@{buttonPressStart}!main.cpp@{main.cpp}}
 \doxysubsubsection{\texorpdfstring{buttonPressStart}{buttonPressStart}}

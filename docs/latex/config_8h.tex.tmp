@@ -1,14 +1,14 @@
-\doxysection{src/config.h File Reference}
+\doxysection{src/config.h filreference}
 \hypertarget{config_8h}{}\label{config_8h}\index{src/config.h@{src/config.h}}
 {\ttfamily \#include $<$One\+Wire.\+h$>$}\newline
 {\ttfamily \#include $<$Dallas\+Temperature.\+h$>$}\newline
 {\ttfamily \#include $<$ESPAsync\+Web\+Server.\+h$>$}\newline
 {\ttfamily \#include $<$Async\+TCP.\+h$>$}\newline
-Include dependency graph for config.\+h\+:
+Inklusions-\/afhængighedsgraf for config.\+h\+:
 % FIG 0
-This graph shows which files directly or indirectly include this file\+:
+Denne graf viser, hvilke filer der direkte eller indirekte inkluderer denne fil\+:
 % FIG 1
-\doxysubsubsection*{Macros}
+\doxysubsubsection*{\#Defines}
 \begin{DoxyCompactItemize}
 \item 
 \#define \mbox{\hyperlink{config_8h_a4260ed8874da804fb9ef9abba200b487}{ONE\+\_\+\+WIRE\+\_\+\+BUS}}~4
@@ -21,7 +21,7 @@ This graph shows which files directly or indirectly include this file\+:
 \begin{DoxyCompactList}\small\item\em Adgangskode til Access Point (AP). \end{DoxyCompactList}\item 
 \#define \mbox{\hyperlink{config_8h_a541689b4b95fb5d3c4b6d1d9c23b1b3e}{DATA\+\_\+\+FILENAME}}~"{}/output.\+csv"{}
 \begin{DoxyCompactList}\small\item\em Filnavn for CSV-\/datafil gemt i SPIFFS. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\doxysubsubsection*{Variables}
+\doxysubsubsection*{Variable}
 \begin{DoxyCompactItemize}
 \item 
 constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{config_8h_a9aa67f3297f612883e61a753179f7848}{CSV\+\_\+\+HEADER}} = "{}Time,Temperature"{}
@@ -42,7 +42,7 @@ bool \mbox{\hyperlink{config_8h_ad53c51e9c6ebec35c453a42ea91b9e13}{is\+Reset}}
 \begin{DoxyCompactList}\small\item\em Angiver om enheden er blevet nulstillet. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
-\doxysubsection{Macro Definition Documentation}
+\doxysubsection{\#Define-\/dokumentation}
 \Hypertarget{config_8h_a541689b4b95fb5d3c4b6d1d9c23b1b3e}\index{config.h@{config.h}!DATA\_FILENAME@{DATA\_FILENAME}}
 \index{DATA\_FILENAME@{DATA\_FILENAME}!config.h@{config.h}}
 \doxysubsubsection{\texorpdfstring{DATA\_FILENAME}{DATA\_FILENAME}}
@@ -95,7 +95,7 @@ Adgangskode til Access Point (AP).
 
 
 
-\doxysubsection{Variable Documentation}
+\doxysubsection{Variabel-\/dokumentation}
 \Hypertarget{config_8h_a60879f0ffc31ebcea6387a805d59a604}\index{config.h@{config.h}!buttonPressStart@{buttonPressStart}}
 \index{buttonPressStart@{buttonPressStart}!config.h@{config.h}}
 \doxysubsubsection{\texorpdfstring{buttonPressStart}{buttonPressStart}}
