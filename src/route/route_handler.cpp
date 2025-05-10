@@ -1,8 +1,7 @@
 #include <WiFiManager.h>           ///< Bibliotek til nem WiFi-konfiguration
 #include <ESPAsyncWebServer.h>    ///< Asynkron webserver/websocket-bibliotek til ESP32
 #include <SPIFFS.h>               ///< SPIFFS-filsystem til lagring af webfiler
-#include "route_handler.h"        ///< Headerfil hvor server er deklareret
-
+#include "route_handler.h"
 /**
  * @brief Registrerer alle HTTP-ruter til webserveren.
  * 

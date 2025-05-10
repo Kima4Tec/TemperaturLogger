@@ -6,10 +6,9 @@
 /**
  * @brief Sætter tidszonen for ESP32-systemet.
  *
- * Funktionen konfigurerer miljøvariablen for tidszone, så korrekt lokal tid
- * kan hentes via NTP.
+ * Funktionen konfigurerer variablen for tidszone, så korrekt dansk tid kan hentes via NTP.
  *
- * @param timezone Tidszone-streng i POSIX-format, f.eks. "CET-1CEST,M3.5.0/2,M10.5.0/3".
+ * @param timezone Tidszone-streng i POSIX-format, sat til "CET-1CEST,M3.5.0/2,M10.5.0/3".
  */
 void setTimezone(String timezone);
 
@@ -17,7 +16,7 @@ void setTimezone(String timezone);
  * @brief Initialiserer NTP-tidsfunktionen med den angivne tidszone.
  *
  * Funktionen sætter tidszonen og starter tidssynkronisering via NTP-servere.
- * Skal kaldes i setup().
+ * Kaldes i setup() i main.
  *
  * @param timezone Tidszone-streng i POSIX-format.
  */

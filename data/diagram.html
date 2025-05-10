@@ -32,7 +32,7 @@
     </div>
   </div>
 
-  <!-- Tilføj Canvas for diagrammet -->
+  <!-- Canvas for diagram -->
   <div style="padding: 20px; max-width: 800px; margin: auto;">
     <h2>Temperatur Diagram</h2>
 
@@ -48,7 +48,7 @@
     <canvas id="temperatureChart" width="400" height="200"></canvas>
   </div>
 
-  <!-- Henter og viser data -->
+  <!-- Script -->
   <script>
     const ctx = document.getElementById('temperatureChart').getContext('2d');
 
@@ -109,7 +109,11 @@
               const allData = results.data.filter(row => row.Time && row.Temperature);
               const slicedData = maxPoints === Infinity ? allData : allData.slice(-maxPoints);
 
-              const labels = slicedData.map(row => row.Time);
+              const labels = slicedData.map(row => {
+                const date = new Date(row.Time);
+                return date.toLocaleTimeString(); // fx "14:23:11"
+              });
+
               const temperatures = slicedData.map(row => row.Temperature);
 
               chart.data.labels = labels;
@@ -122,15 +126,15 @@
 
     document.getElementById('pointCount').addEventListener('change', loadCSV);
 
-    // Kald ved opstart
+    // Kør ved opstart
     loadCSV();
 
-    // WebSocket til live-opdatering
+    // WebSocket live-opdatering
     const socket = new WebSocket(`ws://${window.location.host}/ws`);
 
     socket.onmessage = function (event) {
       const data = JSON.parse(event.data);
-      const time = new Date().toLocaleTimeString();
+      const time = new Date().toLocaleTimeString(); // viser kun hh:mm:ss
 
       chart.data.labels.push(time);
       chart.data.datasets[0].data.push(data.temperature);

@@ -1,46 +1,47 @@
+----------------------------------------------------------------------------
+              OVERSIGT OVER FILER I PROJEKTET TEMPERATURLOGGER              
+----------------------------------------------------------------------------
 
-This directory is intended for project specific (private) libraries.
-PlatformIO will compile them to static libraries and link into the executable file.
-
-The source code of each library should be placed in a separate directory
-("lib/your_library_name/[Code]").
-
-For example, see the structure of the following example libraries `Foo` and `Bar`:
-
+|--data
+|  |--chart.js
+|  |--diagram.html
+|  |--index.html
+|  |--output.csv
+|  |--papaparse.min.js
+|  |--service.html
+|  |--style.css
+|  
 |--lib
-|  |
-|  |--Bar
-|  |  |--docs
-|  |  |--examples
-|  |  |--src
-|  |     |- Bar.c
-|  |     |- Bar.h
-|  |  |- library.json (optional. for custom build options, etc) https://docs.platformio.org/page/librarymanager/config.html
-|  |
-|  |--Foo
-|  |  |- Foo.c
-|  |  |- Foo.h
-|  |
-|  |- README --> THIS FILE
+|  |--flowchart.md --> kræver mermaid extension for at se
+|  |--README --> Denne fil
+|  |--TemperaturLogger --> Doxygen konfiguration
+|  |--TemperaturLogger Projektbeskrivelse.docx
+|  |--TemperaturLogger_bb.png --> Fritzing breadboard image
+|  |--TemperaturLogger.docx --> Brugervejledning
 |
 |- platformio.ini
 |--src
-   |- main.c
+|  |--csv
+|     |--csv_handler.cpp
+|     |--csv_handler.h
+|  |--reset
+|     |--reset_handler.cpp
+|     |--reset_handler.h
+|  |--route
+|     |--route_handler.cpp
+|     |--route_handler.h
+|  |--sensor
+|     |--sensor_handler.cpp
+|     |--sensor_handler.h
+|  |--time
+|     |--time_handler.cpp
+|     |--time_handler.h
+|  |--websocket
+|     |--websocket_handler.cpp
+|     |--websocket_handler.h
+|  |--wifi
+|     |--wifi_handler.cpp
+|     |--wifi_handler.h
+|  |- config.h
+|  |- main.cpp
 
-Example contents of `src/main.c` using Foo and Bar:
-```
-#include <Foo.h>
-#include <Bar.h>
-
-int main (void)
-{
-  ...
-}
-
-```
-
-The PlatformIO Library Dependency Finder will find automatically dependent
-libraries by scanning project source files.
-
-More information about PlatformIO Library Dependency Finder
-- https://docs.platformio.org/page/librarymanager/ldf.html

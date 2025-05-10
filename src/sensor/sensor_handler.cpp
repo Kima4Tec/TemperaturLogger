@@ -1,15 +1,15 @@
 #include <WiFi.h>
 #include <SPIFFS.h>
 #include <ESPAsyncWebServer.h>
+#include <AsyncTCP.h> 
 #include "sensor_handler.h"
 #include "csv/csv_handler.h"
 
 /**
- * @file logger.cpp
  * @brief Indeholder funktioner til at hente og logge temperaturdata samt sende dem via WebSocket.
  */
 
-/// Filnavn for CSV-logfilen (defineret andetsteds)
+/// Filnavn for CSV-logfilen (defineret i config.h)
 extern const char *filename;
 
 /**
@@ -17,7 +17,7 @@ extern const char *filename;
  * 
  * @param[out] timeString En buffer hvor den formaterede tid (YYYY-MM-DD HH:MM:SS) gemmes.
  * 
- * Denne funktion venter indtil gyldig tid er tilgængelig via NTP og formaterer den til en læsbar streng.
+ * Funktionen venter indtil, der er en gyldig tid via NTP og formaterer den til en læsbar streng.
  */
 void getFormattedTime(char *timeString) {
     struct tm timeinfo;
@@ -34,7 +34,8 @@ void getFormattedTime(char *timeString) {
  * @param sensors En reference til DallasTemperature-sensorobjektet.
  * @param timeString En streng med den aktuelle tid.
  * 
- * Funktionen venter på en gyldig temperaturmåling og logger derefter både tidspunkt og temperatur til fil.
+ * Funktionen venter på en gyldig temperaturmåling (-127.0 viser manglende forbindelse) og logger derefter både tid og temperatur til fil.
+ * Temperaturen fra sensor læses og der tilføjes en ny linje med tid og temperatur til CSV-filen.
  */
 void logTemperatureToCSV(DallasTemperature &sensors, char *timeString) {
     sensors.requestTemperatures();
@@ -73,5 +74,5 @@ void printLog() {
     appendToCSV(filename, logTime, tempC);
 
     String message = "{\"temperature\": " + String(tempC, 2) + "}";
-    ws.textAll(message);  ///< Sender til alle forbundne WebSocket-klienter
+    ws.textAll(message);
 }

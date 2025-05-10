@@ -2,6 +2,7 @@
 #define WEBSOCKET_HANDLER_H
 
 #include <ESPAsyncWebServer.h>
+ #include <AsyncTCP.h> 
 
 /**
  * @brief WebSocket event handler.

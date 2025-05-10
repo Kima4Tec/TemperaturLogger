@@ -3,14 +3,11 @@
 #include "reset_handler.h"
 
 /**
- * @brief Tjekker om reset-knappen holdes nede i mindst 10 sekunder og udfører software-reset.
- * 
+ * @brief Tjekker om reset-knappen holdes nede i mindst 10 sekunder og udfører så reset.
  * Når knappen holdes nede (LOW-niveau på RESET_BUTTON_PIN) i mindst 10 sekunder,
- * nulstilles WiFi-indstillinger via WiFiManager og ESP32 genstartes.
- * 
+ * nulstilles WiFi-indstillinger via WiFiManager og ESP32 genstartes. isReset sørger for at 
+ * der kun resettes en gang.
  * Hvis knappen slippes før tiden er gået, annulleres reset-processen.
- * 
- * @note Bør kaldes regelmæssigt i loop().
  */
 void checkResetButton() {
     int buttonState = digitalRead(RESET_BUTTON_PIN);

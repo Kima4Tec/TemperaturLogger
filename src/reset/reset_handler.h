@@ -4,6 +4,9 @@
 #include <Arduino.h>
 #include "config.h"
 
-void checkResetButton();
+/**
+ * @brief Tjekker om reset-knappen holdes nede i mindst 10 sekunder og udfører så reset.
+ */
+ void checkResetButton();
 
 #endif

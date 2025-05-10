@@ -45,13 +45,13 @@
  /// Starttidspunkt for reset-knap
  unsigned long buttonPressStart = 0;
  
- /// Flag for igangværende reset
+ /// Bool for igangværende reset
  bool resetInitiated = false;
  
  /// Formatér tid som tekst
  char timeString[64];
  
- /// Flag for reset-status
+ /// Bool for reset-status
  bool isReset = false;
  
  /**
@@ -84,14 +84,14 @@
  }
  
  /**
-  * @brief Hovedloop. Logger temperaturperiodisk og håndterer WiFi og reset-knap.
+  * @brief Loop: logger temperatur samt håndterer WiFi og reset-knap.
   */
  void loop()
  {
    static unsigned long lastLogTime = 0;
    unsigned long currentMillis = millis();
  
-   checkResetButton(); ///< Overvåg reset-knap
+   checkResetButton(); /// Checker om reset-knappen er blevet trykket ned 
  
    if ((WiFi.status() != WL_CONNECTED) && (currentMillis - previousMillis >= interval))
    {
